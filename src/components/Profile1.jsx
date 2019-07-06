@@ -10,7 +10,11 @@ import {
   MDBModal,
   MDBModalBody,
   MDBModalHeader,
-  MDBModalFooter
+  MDBModalFooter,
+  MDBContainer,
+  MDBRow,
+  MDBCol,
+  MDBInput
 } from "mdbreact";
 
 export class Profile1 extends Component {
@@ -60,7 +64,52 @@ export class Profile1 extends Component {
           toggle={this.toggleProfileUpdateModel}
         >
           <MDBModalHeader toggle={this.toggle}>Update Profile</MDBModalHeader>
-          <MDBModalBody>(...)</MDBModalBody>
+          <MDBModalBody>
+            <MDBContainer>
+              <MDBRow>
+                <MDBCol md="6">
+                  <form>
+                    <div className="grey-text">
+                      <MDBInput
+                        label="Your Name"
+                        icon="user"
+                        group
+                        type="text"
+                        validate
+                        error="wrong"
+                        success="right"
+                      />
+                      <MDBInput
+                        label="Your Department"
+                        icon="university"
+                        group
+                        type="text"
+                        validate
+                        error="wrong"
+                        success="right"
+                      />
+                      <MDBInput
+                        label="Your Phone Number"
+                        icon="mobile-alt"
+                        group
+                        type="text"
+                        validate
+                        error="wrong"
+                        success="right"
+                      />
+                      <MDBInput
+                        label="Your Blood Group"
+                        icon="tint"
+                        group
+                        type="password"
+                        validate
+                      />
+                    </div>
+                  </form>
+                </MDBCol>
+              </MDBRow>
+            </MDBContainer>
+          </MDBModalBody>
           <MDBModalFooter>
             <MDBBtn color="secondary" onClick={this.toggleProfileUpdateModel}>
               Close
