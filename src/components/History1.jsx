@@ -39,6 +39,54 @@ export class History1 extends Component {
     alert(event.target.getAttribute("label"));
   };
   render() {
+    let elementsToFilter = [
+      {
+        type: "All",
+        heading: "List group item heading1",
+        days: "3 days ago",
+        details: "Donec id elit non mi porta gravida at eget metus. blandit.",
+        des: "Donec id elit non mi porta."
+      },
+      {
+        type: "Requests",
+        heading: "List group item heading2",
+        days: "4 days ago",
+        details: "Donec id elit non mi porta gravida at eget metus. blandit.",
+        des: "Donec id elit non mi porta."
+      },
+      {
+        type: "Requests",
+        heading: "List group item heading3",
+        days: "4 days ago",
+        details: "Donec id elit non mi porta gravida at eget metus. blandit.",
+        des: "Donec id elit non mi porta."
+      },
+      {
+        type: "Accepts",
+        heading: "List group item heading4",
+        days: "2 days ago",
+        details: "Donec id elit non mi porta gravida at eget metus. blandit.",
+        des: "Donec id elit non mi porta."
+      }
+    ];
+    let filteredData = elementsToFilter
+      .filter(element => {
+        return element.type.indexOf("Requests") >= 0;
+      })
+      .map(element => {
+        return (
+          <MDBListGroupItem onClick={this.toggle(14)} hover href="#">
+            <div className="d-flex w-100 justify-content-between">
+              <h5 className="mb-1">{element.heading}</h5>
+              <small className="text-muted">{element.days}</small>
+            </div>
+            <p className="mb-1">{element.details}</p>
+            <small className="text-muted">{element.des}</small>
+            <span className="sr-only" name={element.type} />
+          </MDBListGroupItem>
+        );
+      });
+
     return (
       <React.Fragment>
         <MDBFormInline>
@@ -73,42 +121,8 @@ export class History1 extends Component {
           />
         </MDBFormInline>
 
-        <MDBListGroup>
-          <MDBListGroupItem onClick={this.toggle(14)} active href="#">
-            <div className="d-flex w-100 justify-content-between">
-              <h5 className="mb-1">List group item heading</h5>
-              <small>3 days ago</small>
-            </div>
-            <p className="mb-1">
-              Donec id elit non mi porta gravida at eget metus. Maecenas sed
-              diam eget risus varius blandit.
-            </p>
-            <small>Donec id elit non mi porta.</small>
-          </MDBListGroupItem>
-          <MDBListGroupItem onClick={this.toggle(14)} hover href="#">
-            <div className="d-flex w-100 justify-content-between">
-              <h5 className="mb-1">List group item heading</h5>
-              <small className="text-muted">3 days ago</small>
-            </div>
-            <p className="mb-1">
-              Donec id elit non mi porta gravida at eget metus. Maecenas sed
-              diam eget risus varius blandit.
-            </p>
-            <small className="text-muted">Donec id elit non mi porta.</small>
-          </MDBListGroupItem>
-          <MDBListGroupItem onClick={this.toggle(14)} hover href="#">
-            <div className="d-flex w-100 justify-content-between">
-              <h5 className="mb-1">List group item heading</h5>
-              <small className="text-muted">3 days ago</small>
-            </div>
-            <p className="mb-1">
-              Donec id elit non mi porta gravida at eget metus. Maecenas sed
-              diam eget risus varius blandit.
-            </p>
-            <small className="text-muted">Donec id elit non mi porta.</small>
-          </MDBListGroupItem>
-        </MDBListGroup>
-
+        <MDBListGroup />
+        {filteredData}
         <MDBContainer>
           <MDBModal
             isOpen={this.state.modal14}
@@ -136,3 +150,42 @@ export class History1 extends Component {
     );
   }
 }
+
+/*
+          <MDBListGroupItem onClick={this.toggle(14)} active href="#">
+            <div className="d-flex w-100 justify-content-between">
+              <h5 className="mb-1">List group item heading</h5>
+              <small>3 days ago</small>
+            </div>
+            <p className="mb-1">
+              Donec id elit non mi porta gravida at eget metus. Maecenas sed
+              diam eget risus varius blandit.
+            </p>
+            <small>Donec id elit non mi porta.</small>
+            <span className="sr-only" name="All" />
+          </MDBListGroupItem>
+          <MDBListGroupItem onClick={this.toggle(14)} hover href="#">
+            <div className="d-flex w-100 justify-content-between">
+              <h5 className="mb-1">List group item heading</h5>
+              <small className="text-muted">3 days ago</small>
+            </div>
+            <p className="mb-1">
+              Donec id elit non mi porta gravida at eget metus. Maecenas sed
+              diam eget risus varius blandit.
+            </p>
+            <small className="text-muted">Donec id elit non mi porta.</small>
+            <span className="sr-only" name="Accepts" />
+          </MDBListGroupItem>
+          <MDBListGroupItem onClick={this.toggle(14)} hover href="#">
+            <div className="d-flex w-100 justify-content-between">
+              <h5 className="mb-1">List group item heading</h5>
+              <small className="text-muted">3 days ago</small>
+            </div>
+            <p className="mb-1">
+              Donec id elit non mi porta gravida at eget metus. Maecenas sed
+              diam eget risus varius blandit.
+            </p>
+            <small className="text-muted">Donec id elit non mi porta.</small>
+            <span className="sr-only" name="Requests" />
+          </MDBListGroupItem>
+*/
