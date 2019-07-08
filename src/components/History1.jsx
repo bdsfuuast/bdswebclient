@@ -16,11 +16,13 @@ export class History1 extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      modal: false
+      modal: false,
+      filterText: "All"
     };
   }
   state = {
-    modal14: false
+    modal14: false,
+    filterText: "All"
   };
 
   toggle = nr => () => {
@@ -35,13 +37,20 @@ export class History1 extends Component {
       modal: !this.state.modal
     });
   };
+
   historyFilter = event => {
-    alert(event.target.getAttribute("label"));
+    let ovalue = event.target.value;
+    let evalue = { 1: "All", 2: "Requests", 3: "Accepts", 4: "Donnations" };
+    this.setState({
+      filterText: evalue[ovalue]
+    });
+    // alert(evalue[ovalue]);
   };
+
   render() {
     let elementsToFilter = [
       {
-        type: "All",
+        type: "Donnations",
         heading: "List group item heading1",
         days: "3 days ago",
         details: "Donec id elit non mi porta gravida at eget metus. blandit.",
@@ -69,9 +78,11 @@ export class History1 extends Component {
         des: "Donec id elit non mi porta."
       }
     ];
+
     let filteredData = elementsToFilter
       .filter(element => {
-        return element.type.indexOf("Requests") >= 0;
+        if (this.state.filterText === "All") return element;
+        else return element.type.indexOf(this.state.filterText) >= 0;
       })
       .map(element => {
         return (
@@ -94,27 +105,34 @@ export class History1 extends Component {
             onClick={this.historyFilter}
             type="radio"
             label="All"
+            value="1"
             name="formHorizontalRadios"
             id="formHorizontalRadios1"
             className="grey-text font-weight-light mr-3"
           />
           <Form.Check
+            onClick={this.historyFilter}
             type="radio"
             label="Requests"
+            value="2"
             name="formHorizontalRadios"
             id="formHorizontalRadios2"
             className="grey-text font-weight-light mr-3"
           />
           <Form.Check
+            onClick={this.historyFilter}
             type="radio"
             label="Accepts"
+            value="3"
             name="formHorizontalRadios"
             id="formHorizontalRadios3"
             className="grey-text font-weight-light mr-3"
           />
           <Form.Check
+            onClick={this.historyFilter}
             type="radio"
             label="Donnations"
+            value="4"
             name="formHorizontalRadios"
             id="formHorizontalRadios3"
             className="grey-text font-weight-light mr-3"
