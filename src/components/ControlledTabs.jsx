@@ -3,11 +3,11 @@ import { Tabs, Tab } from "react-bootstrap";
 import { MDBCard, MDBCardBody } from "mdbreact";
 
 import { Form1 } from "./Form1";
-import { Table1 } from "./Table1";
 import { TabLayout } from "./TabLayout";
 import { Updates1 } from "./Updates1";
 import { Profile1 } from "./Profile1";
 import { History1 } from "./History1";
+import { Settings1 } from "./Settings1";
 
 export class ControlledTabs extends Component {
   constructor(props, context) {
@@ -56,8 +56,8 @@ export class ControlledTabs extends Component {
                 </TabLayout>
               </Tab>
               <Tab eventKey="settings" title="Settings">
-                <TabLayout>
-                  <Table1 />
+                <TabLayout width="100">
+                  <Settings1 />
                 </TabLayout>
               </Tab>
             </Tabs>

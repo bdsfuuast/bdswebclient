@@ -9,7 +9,7 @@ export class Form1 extends Component {
       Location: "PIMS, Islamabad",
       Description: "short description...",
       BloodGroup: "4",
-      Count: "15"
+      Count: "5"
     };
   }
   handleInputChange = event => {
@@ -30,14 +30,19 @@ export class Form1 extends Component {
   handleSubmit = event => {
     event.preventDefault();
 
-    const url = "http://agpstore.000webhostapp.com/postform.php";
+    // const url = "http://agpstore.000webhostapp.com/postform.php";
+    const url = "http://localhost:56280/api/Requests";
     //       {
     //         Accept: "application/json, text/plain",
     //         "Content-Type": "application/json;charset=UTF-8"
     //       },
     let fetchData = {
       method: "POST",
-      headers: new Headers(),
+      headers: {
+        Accept: "application/json, text/plain",
+        "Content-Type": "application/json;charset=UTF-8"
+      },
+      //new Headers(),
       body: JSON.stringify(this.state)
     };
     fetch(url, fetchData)
@@ -54,10 +59,12 @@ export class Form1 extends Component {
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
-        <p className="h4 text-center py-4">Request</p>
+        <p className="h4 text-center py-4">
+          Do inform others that You need their Help!
+        </p>
         <label
           htmlFor="defaultFormCardNameEx"
-          className="grey-text font-weight-light"
+          className="grey-text font-weight-light customStyles"
         >
           Select Blood Group
         </label>
@@ -83,8 +90,10 @@ export class Form1 extends Component {
           name="Location"
           value={this.state.Location}
           onChange={this.handleInputChange}
+          labelClass={"customStyles"}
         />
         <MDBInput
+          labelClass={"customStyles"}
           name="Description"
           value={this.state.Description}
           onChange={this.handleInputChange}

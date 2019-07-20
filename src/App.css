@@ -8,6 +8,44 @@
   pointer-events: none;
 }
 
+/* User-Defined CSS Starts */
+
+a {
+  color: #d22e2f;
+}
+
+a:hover {
+  color: #fe0000;
+}
+
+.customStyles {
+  font-size: 13pt !important;
+  color: black;
+}
+
+.main-box {
+  position: relative;
+  padding: 0;
+  float: left;
+  margin: 0;
+  margin-right: 10px;
+  flex: 1;
+}
+.blood-sign {
+  position: absolute;
+  font-size: 25pt;
+  top: 5px;
+  left: 8px;
+  color: red;
+}
+.mark-sign {
+  position: absolute;
+  top: 24px;
+  left: 23px;
+  color: black;
+}
+
+/* User-Defined CSS Ends */
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
