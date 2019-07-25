@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
+//import ReactDOM from "react-dom";
 import { Form } from "react-bootstrap";
 import {
   MDBFormInline,
@@ -87,7 +87,12 @@ export class History1 extends Component {
       })
       .map(element => {
         return (
-          <MDBListGroupItem onClick={this.toggle(14)} hover href="#">
+          <MDBListGroupItem
+            key={elementsToFilter.indexOf(element)}
+            onClick={this.toggle(14)}
+            hover
+            href="#"
+          >
             <div className="d-flex w-100 justify-content-between">
               <h5 className="mb-1">{element.heading}</h5>
               <small className="text-muted">{element.days}</small>

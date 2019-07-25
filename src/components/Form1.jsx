@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { MDBBtn, MDBIcon, MDBInput } from "mdbreact";
+import { PostData } from "../services/PostData";
 
 export class Form1 extends Component {
   constructor(props) {
@@ -12,6 +13,7 @@ export class Form1 extends Component {
       Count: "5"
     };
   }
+
   handleInputChange = event => {
     const target = event.target;
     const value = target.type === "checkbox" ? target.checked : target.value;
@@ -21,6 +23,7 @@ export class Form1 extends Component {
       [name]: value
     });
   };
+
   handleSelectChange = event => {
     this.setState({
       BloodGroup: event.target.value
@@ -29,31 +32,9 @@ export class Form1 extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-
-    // const url = "http://agpstore.000webhostapp.com/postform.php";
-    const url = "http://localhost:56280/api/Requests";
-    //       {
-    //         Accept: "application/json, text/plain",
-    //         "Content-Type": "application/json;charset=UTF-8"
-    //       },
-    let fetchData = {
-      method: "POST",
-      headers: {
-        Accept: "application/json, text/plain",
-        "Content-Type": "application/json;charset=UTF-8"
-      },
-      //new Headers(),
-      body: JSON.stringify(this.state)
-    };
-    fetch(url, fetchData)
-      .then(function(e) {
-        if (e.status !== 200) throw new Error("Something went wrong");
-        console.log(e);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-    //console.log(this.state);
+    PostData("requests", this.state)
+      .then(data => console.log(data))
+      .catch(error => console.log(error));
   };
 
   render() {

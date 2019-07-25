@@ -22,9 +22,9 @@ export class Settings1 extends Component {
           <MDBBadge color="light" className="m-2">
             Status:
           </MDBBadge>
-          <label class="switch">
+          <label className="switch">
             <input type="checkbox" />
-            <span class="slider round" />
+            <span className="slider round" />
           </label>
         </div>
 

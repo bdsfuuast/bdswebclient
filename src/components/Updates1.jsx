@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { MDBBtn, MDBAlert } from "mdbreact";
-import { relative } from "path";
+import { MDBAlert } from "mdbreact";
+//import { relative } from "path";
 
 export class Updates1 extends Component {
   render() {
@@ -60,7 +60,10 @@ export class Updates1 extends Component {
     };
     let singleNotification = updateNotifications.map(single => {
       return (
-        <MDBAlert color={notificationType[single.type]}>
+        <MDBAlert
+          key={updateNotifications.indexOf(single)}
+          color={notificationType[single.type]}
+        >
           <div className="d-flex">
             <div className="container main-box">
               <i className="blood-sign fas fa-tint" />
