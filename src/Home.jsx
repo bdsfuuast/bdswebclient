@@ -2,8 +2,12 @@ import React, { Component } from "react";
 import { MDBContainer, MDBNotification } from "mdbreact";
 import NavbarPage from "./components/NavbarPage";
 import { ControlledTabs } from "./components/ControlledTabs";
-import { Toast, Button } from "react-bootstrap";
 import Pusher from "pusher-js";
+import {
+  ToastsContainer,
+  ToastsStore,
+  ToastsContainerPosition
+} from "react-toasts";
 
 export class Home extends Component {
   constructor(props) {
@@ -24,8 +28,9 @@ export class Home extends Component {
     const channel = pusher.subscribe("my-channel");
     channel.bind("my-event", data => {
       //this.setState({ message: data.message, showNotification: true });
-      //this functon is trigerd whenever a notification is send from server through pusher.
-      console.log(this.state);
+
+      ToastsStore.info(data.message);
+      //console.log(this.state);
     });
   }
   render() {
@@ -35,9 +40,11 @@ export class Home extends Component {
           <NavbarPage />
           <ControlledTabs />
         </MDBContainer>
-        {
-          //Notificatin toast to be placed here..........................
-        }
+
+        <ToastsContainer
+          position={ToastsContainerPosition.BOTTOM_LEFT}
+          store={ToastsStore}
+        />
       </React.Fragment>
     );
   }

@@ -7,42 +7,42 @@ export class Updates1 extends Component {
     let updateNotifications = [
       {
         type: 1,
-        motivation: "Motivation of the Notificaiton!",
+        motivation: "Notificaiton Title",
         notificationBody:
           "You have a new blood request please review it here thanks!",
         days: "1 days ago"
       },
       {
         type: 1,
-        motivation: "Motivation of the Notificaiton!",
+        motivation: "Notificaiton Title",
         notificationBody:
           "You have a new blood request please review it here thanks!",
         days: "2 days ago"
       },
       {
         type: 2,
-        motivation: "Motivation of the Notificaiton!",
+        motivation: "Notificaiton Title",
         notificationBody:
           "You have a new blood request please review it here thanks!",
         days: "3 days ago"
       },
       {
         type: 3,
-        motivation: "Motivation of the Notificaiton!",
+        motivation: "Notificaiton Title",
         notificationBody:
           "You have a new blood request please review it here thanks!",
         days: "3 days ago"
       },
       {
         type: 3,
-        motivation: "Motivation of the Notificaiton!",
+        motivation: "Notificaiton Title",
         notificationBody:
           "You have a new blood request please review it here thanks!",
         days: "4 days ago"
       },
       {
         type: 1,
-        motivation: "Motivation of the Notificaiton!",
+        motivation: "Notificaiton Title",
         notificationBody:
           "You have a new blood request please review it here thanks!",
         days: "4 days ago"
