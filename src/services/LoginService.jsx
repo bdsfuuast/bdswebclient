@@ -19,7 +19,9 @@ export function LoginService(data) {
       .then(res => res.json())
       .then(function(data) {
         if (data.error) throw new Error(data.error_description);
-        sessionStorage.setItem("authData", data);
+        sessionStorage.setItem("access_token", data.access_token);
+        sessionStorage.setItem("expires_in", data.expires_in);
+        sessionStorage.setItem("token_type", data.token_type);
         resolve(true);
         //access_token , expires_in , token_type
       })

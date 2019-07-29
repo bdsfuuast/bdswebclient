@@ -1,79 +1,53 @@
 import React, { Component } from "react";
 import { MDBAlert } from "mdbreact";
+import { FetchData } from "../services/FetchData";
 //import { relative } from "path";
 
 export class Updates1 extends Component {
-  render() {
-    let updateNotifications = [
-      {
-        type: 1,
-        motivation: "Notificaiton Title",
-        notificationBody:
-          "You have a new blood request please review it here thanks!",
-        days: "1 days ago"
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      //Notifications: "",
+      notificationType: {
+        1: "danger",
+        2: "warning",
+        3: "secondary"
       },
-      {
-        type: 1,
-        motivation: "Notificaiton Title",
-        notificationBody:
-          "You have a new blood request please review it here thanks!",
-        days: "2 days ago"
-      },
-      {
-        type: 2,
-        motivation: "Notificaiton Title",
-        notificationBody:
-          "You have a new blood request please review it here thanks!",
-        days: "3 days ago"
-      },
-      {
-        type: 3,
-        motivation: "Notificaiton Title",
-        notificationBody:
-          "You have a new blood request please review it here thanks!",
-        days: "3 days ago"
-      },
-      {
-        type: 3,
-        motivation: "Notificaiton Title",
-        notificationBody:
-          "You have a new blood request please review it here thanks!",
-        days: "4 days ago"
-      },
-      {
-        type: 1,
-        motivation: "Notificaiton Title",
-        notificationBody:
-          "You have a new blood request please review it here thanks!",
-        days: "4 days ago"
+      iconClass: {
+        1: " fa-question",
+        2: " fa-check",
+        3: " fa-check-double"
       }
-    ];
-    let notificationType = {
-      1: "danger",
-      2: "warning",
-      3: "secondary"
     };
-    let iconClass = {
-      1: " fa-check",
-      2: " fa-question",
-      3: " fa-check-double"
-    };
-    let singleNotification = updateNotifications.map(single => {
+    //this.setState({ Notifications: this.props.Notifications });
+    console.log("CALLED");
+  }
+  onNotification() {}
+  render() {
+    if (!this.props.Notifications) {
+      return <div>No notificatins to be shown...!</div>;
+    }
+    let singleNotification = this.props.Notifications.map(single => {
       return (
         <MDBAlert
-          key={updateNotifications.indexOf(single)}
-          color={notificationType[single.type]}
+          key={single.ID}
+          color={this.state.notificationType[single.Activity]}
         >
           <div className="d-flex">
             <div className="container main-box">
               <i className="blood-sign fas fa-tint" />
-              <i className={"mark-sign fas" + iconClass[single.type]} />
+              <i
+                className={
+                  "mark-sign fas" + this.state.iconClass[single.Activity]
+                }
+              />
             </div>
             <div className="container" style={{ flex: 9 }}>
-              <h5>{single.motivation}</h5>
-              <p style={{ margin: 0 }}>{single.notificationBody}</p>
+              <h5>{single.Title}</h5>
+              <p style={{ margin: 0 }}>{single.Body}</p>
             </div>
-            <small style={{ flex: 2 }}>{single.days}</small>
+            <small style={{ flex: 2 }}>{single.Time}</small>
           </div>
         </MDBAlert>
       );
@@ -81,21 +55,3 @@ export class Updates1 extends Component {
     return <React.Fragment>{singleNotification}</React.Fragment>;
   }
 }
-/*
-<MDBAlert color="primary">
-          <div className="d-flex">
-            <div className="container main-box">
-              <i className="blood-sign fas fa-tint" />
-              <i className={"mark-sign fas" + iconClass[3]} />
-            </div>
-            <div className="container" style={{ flex: 9 }}>
-              <h5>Motivation of the Notificaiton!</h5>
-              <p style={{ margin: 0 }}>
-                You have a new blood request please review it here thanks!
-              </p>
-            </div>
-            <small style={{ flex: 2 }}>3 days ago</small>
-          </div>
-        </MDBAlert>
-
-*/

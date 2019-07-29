@@ -9,7 +9,7 @@ export class Login extends Component {
     super(props);
 
     this.state = {
-      username: "s@g.c",
+      username: "m1@g.c",
       password: "123",
       redirectToHome: false
     };
