@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { MDBContainer, MDBNotification } from "mdbreact";
+import { MDBContainer } from "mdbreact";
 import NavbarPage from "./components/NavbarPage";
 import { ControlledTabs } from "./components/ControlledTabs";
 import Pusher from "pusher-js";

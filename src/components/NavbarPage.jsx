@@ -18,6 +18,7 @@ class NavbarPage extends Component {
     Logout: false
   };
   Logout = () => {
+    //alert("logout");
     sessionStorage.clear();
     this.setState({ Logout: true });
   };
@@ -48,7 +49,9 @@ class NavbarPage extends Component {
                 </MDBDropdownToggle>
                 <MDBDropdownMenu className="dropdown-default" right>
                   <MDBDropdownItem href="#">My account</MDBDropdownItem>
-                  <MDBDropdownItem href="#">Log out</MDBDropdownItem>
+                  <MDBDropdownItem href="#" onClick={this.Logout}>
+                    Log out
+                  </MDBDropdownItem>
                 </MDBDropdownMenu>
               </MDBDropdown>
             </MDBNavItem>

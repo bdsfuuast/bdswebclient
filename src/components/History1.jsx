@@ -18,12 +18,12 @@ export class History1 extends Component {
     super(props, context);
     this.state = {
       modal: false,
-      filterText: "All"
+      filterText: "all"
     };
   }
   state = {
     modal14: false,
-    filterText: "All"
+    filterText: "all"
   };
 
   toggle = nr => () => {
@@ -41,7 +41,7 @@ export class History1 extends Component {
 
   historyFilter = event => {
     let ovalue = event.target.value;
-    let evalue = { 1: "All", 2: "Requests", 3: "Accepts", 4: "Donnations" };
+    let evalue = { 1: "all", 2: "req", 3: "acp", 4: "don" };
     this.setState({
       filterText: evalue[ovalue]
     });
@@ -51,58 +51,53 @@ export class History1 extends Component {
   render() {
     let elementsToFilter = [
       {
-        type: "Donnations",
-        heading: "List group item heading1",
+        type: "Donnation",
+        heading: "Donnations",
         days: "3 days ago",
-        details: "Donec id elit non mi porta gravida at eget metus. blandit.",
-        des: "Donec id elit non mi porta."
+        details: "Donec id elit non mi porta gravida at eget metus. blandit."
       },
       {
-        type: "Requests",
-        heading: "List group item heading2",
+        type: "Request",
+        heading: "Requests",
         days: "4 days ago",
-        details: "Donec id elit non mi porta gravida at eget metus. blandit.",
-        des: "Donec id elit non mi porta."
+        details: "Donec id elit non mi porta gravida at eget metus. blandit."
       },
       {
-        type: "Requests",
-        heading: "List group item heading3",
+        type: "Request",
+        heading: "Requests",
         days: "4 days ago",
-        details: "Donec id elit non mi porta gravida at eget metus. blandit.",
-        des: "Donec id elit non mi porta."
+        details: "Donec id elit non mi porta gravida at eget metus. blandit."
       },
       {
-        type: "Accepts",
-        heading: "List group item heading4",
+        type: "Accept",
+        heading: "Accepts",
         days: "2 days ago",
-        details: "Donec id elit non mi porta gravida at eget metus. blandit.",
-        des: "Donec id elit non mi porta."
+        details: "Donec id elit non mi porta gravida at eget metus. blandit."
       }
     ];
 
-    let filteredData = elementsToFilter
-      .filter(element => {
-        if (this.state.filterText === "All") return element;
-        else return element.type.indexOf(this.state.filterText) >= 0;
-      })
-      .map(element => {
-        return (
-          <MDBListGroupItem
-            key={elementsToFilter.indexOf(element)}
-            onClick={this.toggle(14)}
-            hover
-            href="#"
-          >
-            <div className="d-flex w-100 justify-content-between">
-              <h5 className="mb-1">{element.heading}</h5>
-              <small className="text-muted">{element.days}</small>
-            </div>
-            <p className="mb-1">{element.details}</p>
-            <small className="text-muted">{element.des}</small>
-            <span className="sr-only" name={element.type} />
-          </MDBListGroupItem>
-        );
-      });
+    if (!this.props.History) {
+      return <div>Sorry! No data be shown.</div>;
+    }
+    let filteredData = this.props.History.filter(element => {
+      if (this.state.filterText === "all") return element;
+      else return element.Type.indexOf(this.state.filterText) >= 0;
+    }).map(element => {
+      return (
+        <MDBListGroupItem
+          key={this.props.History.indexOf(element)}
+          onClick={this.toggle(14)}
+          hover
+        >
+          <div className="d-flex w-100 justify-content-between">
+            <h5 className="mb-1">{element.Title}</h5>
+            <small className="text-muted">{element.Time}</small>
+          </div>
+          <p className="mb-1">{element.Description}</p>
+          <span className="sr-only" name={element.Type} />
+        </MDBListGroupItem>
+      );
+    });
 
     return (
       <React.Fragment>

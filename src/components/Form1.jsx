@@ -41,7 +41,7 @@ export class Form1 extends Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <p className="h4 text-center py-4">
-          Do inform others that You need their Help!
+          Let other know you need their help!
         </p>
         <label
           htmlFor="defaultFormCardNameEx"

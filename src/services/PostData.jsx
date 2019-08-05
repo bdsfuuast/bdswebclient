@@ -12,7 +12,11 @@ export function PostData(path, data) {
   };
   return new Promise((resolve, reject) => {
     fetch(url, fetchData)
-      .then(res => res.json())
+      .then(res => {
+        if (res.status !== 200)
+          throw new Error("Something went wrong Error: " + res.statusText);
+        return res.json();
+      })
       .then(function(data) {
         if (data.error) throw new Error(data.error_description);
         resolve(data);

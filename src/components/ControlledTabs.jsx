@@ -1,13 +1,16 @@
 import React, { Component } from "react";
-import { Tabs, Tab, TabContainer } from "react-bootstrap";
+import { Tabs, Tab } from "react-bootstrap";
 import { MDBCard, MDBCardBody } from "mdbreact";
 
-import { Form1 } from "./Form1";
 import { TabLayout } from "./TabLayout";
+
+import { Form1 } from "./Form1";
 import { Updates1 } from "./Updates1";
+import { Requests } from "./Requests";
 import { Profile1 } from "./Profile1";
 import { History1 } from "./History1";
 import { Settings1 } from "./Settings1";
+
 import { FetchData } from "../services/FetchData";
 
 export class ControlledTabs extends Component {
@@ -15,7 +18,8 @@ export class ControlledTabs extends Component {
     super(props, context);
     this.state = {
       key: "home",
-      Notifications: ""
+      Notifications: "",
+      History: ""
     };
   }
   onClick = nr => () => {
@@ -25,15 +29,29 @@ export class ControlledTabs extends Component {
   };
   onTabSelect = key => {
     this.setState({ key });
-    if (key === "updates") {
-      console.log("updates Selected");
-      FetchData("notifications")
-        .then(result => {
-          this.setState({ Notifications: result });
-        })
-        .catch(errorMessage => {
-          //ToastsStore.error(errorMessage);
-        });
+    switch (key) {
+      case "updates": {
+        FetchData("notifications")
+          .then(result => {
+            this.setState({ Notifications: result });
+          })
+          .catch(errorMessage => {
+            console.log(errorMessage);
+          });
+        break;
+      }
+      case "history": {
+        FetchData("history")
+          .then(result => {
+            this.setState({ History: result });
+          })
+          .catch(errorMessage => {
+            console.log(errorMessage);
+          });
+        break;
+      }
+      default:
+        break;
     }
   };
   render() {
@@ -60,9 +78,14 @@ export class ControlledTabs extends Component {
                   <Updates1 Notifications={this.state.Notifications} />
                 </TabLayout>
               </Tab>
+              <Tab eventKey="requests" title="Active Requests">
+                <TabLayout>
+                  <Requests />
+                </TabLayout>
+              </Tab>
               <Tab eventKey="history" title="History">
                 <TabLayout>
-                  <History1 />
+                  <History1 History={this.state.History} />
                 </TabLayout>
               </Tab>
               <Tab eventKey="profile" title="Profile">
