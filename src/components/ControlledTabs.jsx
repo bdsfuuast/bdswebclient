@@ -6,7 +6,7 @@ import { TabLayout } from "./TabLayout";
 
 import { Form1 } from "./Form1";
 import { Updates1 } from "./Updates1";
-import { Requests } from "./Requests";
+import { ActiveRequests } from "./ActiveRequests";
 import { Profile1 } from "./Profile1";
 import { History1 } from "./History1";
 import { Settings1 } from "./Settings1";
@@ -19,7 +19,8 @@ export class ControlledTabs extends Component {
     this.state = {
       key: "home",
       Notifications: "",
-      History: ""
+      History: "",
+      Requests: ""
     };
   }
   onClick = nr => () => {
@@ -44,6 +45,16 @@ export class ControlledTabs extends Component {
         FetchData("history")
           .then(result => {
             this.setState({ History: result });
+          })
+          .catch(errorMessage => {
+            console.log(errorMessage);
+          });
+        break;
+      }
+      case "requests": {
+        FetchData("requests")
+          .then(result => {
+            this.setState({ Requests: result });
           })
           .catch(errorMessage => {
             console.log(errorMessage);
@@ -80,7 +91,7 @@ export class ControlledTabs extends Component {
               </Tab>
               <Tab eventKey="requests" title="Active Requests">
                 <TabLayout>
-                  <Requests />
+                  <ActiveRequests Requests={this.state.Requests} />
                 </TabLayout>
               </Tab>
               <Tab eventKey="history" title="History">
@@ -105,7 +116,3 @@ export class ControlledTabs extends Component {
     );
   }
 }
-
-// <MDBCard>
-//   <MDBCardBody />
-// </MDBCard>

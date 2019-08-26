@@ -1,7 +1,7 @@
 export function PostData(path, data) {
   // const url = "http://agpstore.000webhostapp.com/postform.php";
   const url = "http://localhost:56280/api/" + path;
-
+  console.log(data);
   let fetchData = {
     method: "POST",
     headers: {
@@ -23,7 +23,8 @@ export function PostData(path, data) {
         resolve(data);
       })
       .catch(error => {
-        reject(error);
+        console.log(error);
+        reject(error.message);
       });
   });
 

@@ -24,7 +24,7 @@ export class Updates1 extends Component {
     if (!this.props.Notifications) {
       return <div>No notificatins to be shown...!</div>;
     }
-    let singleNotification = this.props.Notifications.map(single => {
+    let Notifications = this.props.Notifications.map(single => {
       return (
         <a href="#">
           <MDBAlert
@@ -50,6 +50,6 @@ export class Updates1 extends Component {
         </a>
       );
     });
-    return <React.Fragment>{singleNotification}</React.Fragment>;
+    return <React.Fragment>{Notifications}</React.Fragment>;
   }
 }

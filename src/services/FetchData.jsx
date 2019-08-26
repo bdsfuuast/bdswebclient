@@ -22,7 +22,7 @@ export function FetchData(path) {
         //access_token , expires_in , token_type
       })
       .catch(error => {
-        reject(error);
+        reject(error.message);
       });
   });
 
