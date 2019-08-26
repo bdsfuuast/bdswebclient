@@ -6,7 +6,8 @@ export function PostData(path, data) {
     method: "POST",
     headers: {
       Accept: "application/json, text/plain",
-      "Content-Type": "application/json;charset=UTF-8"
+      "Content-Type": "application/json;charset=UTF-8",
+      Authorization: "bearer " + sessionStorage.getItem("access_token")
     },
     body: JSON.stringify(data)
   };
