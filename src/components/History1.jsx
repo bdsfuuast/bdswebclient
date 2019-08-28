@@ -13,29 +13,30 @@ import {
   MDBContainer
 } from "mdbreact";
 
+import { HistoryItemDetail } from "./HistoryItemDetail";
+
 export class History1 extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
       modal: false,
-      filterText: "all"
+      filterText: "all",
+      url: ""
     };
   }
-  state = {
-    modal14: false,
-    filterText: "all"
-  };
 
-  toggle = nr => () => {
-    let modalNumber = "modal" + nr;
+  toggleHistoryItemDetailModel = () => {
     this.setState({
-      [modalNumber]: !this.state[modalNumber]
+      modal: !this.state.modal
     });
   };
 
-  toggleProfileUpdateModel = () => {
+  ItemClicked = e => {
+    // console.log();
+
     this.setState({
-      modal: !this.state.modal
+      modal: !this.state.modal,
+      url: "history?type=" + e.target.className + "&id=" + e.target.name
     });
   };
 
@@ -84,16 +85,18 @@ export class History1 extends Component {
       else return element.Type.indexOf(this.state.filterText) >= 0;
     }).map(element => {
       return (
-        <MDBListGroupItem
-          key={this.props.History.indexOf(element)}
-          onClick={this.toggle(14)}
-          hover
-        >
+        <MDBListGroupItem key={this.props.History.indexOf(element)} hover>
           <div className="d-flex w-100 justify-content-between">
             <h5 className="mb-1">{element.Title}</h5>
             <small className="text-muted">{element.Time}</small>
           </div>
-          <p className="mb-1">{element.Description}</p>
+          <a
+            onClick={this.ItemClicked}
+            name={element.ID}
+            className={element.Type}
+          >
+            {element.Description}
+          </a>
           <span className="sr-only" name={element.Type} />
         </MDBListGroupItem>
       );
@@ -144,24 +147,20 @@ export class History1 extends Component {
         {filteredData}
         <MDBContainer>
           <MDBModal
-            isOpen={this.state.modal14}
-            toggle={this.toggle(14)}
-            centered
+            isOpen={this.state.modal}
+            toggle={this.toggleHistoryItemDetailModel}
           >
-            <MDBModalHeader toggle={this.toggle(14)}>
-              MDBModal title
-            </MDBModalHeader>
+            <MDBModalHeader>Details</MDBModalHeader>
             <MDBModalBody>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.
+              <HistoryItemDetail url={this.state.url}></HistoryItemDetail>
             </MDBModalBody>
             <MDBModalFooter>
-              <MDBBtn color="secondary" onClick={this.toggle(14)}>
+              <MDBBtn
+                color="secondary"
+                onClick={this.toggleHistoryItemDetailModel}
+              >
                 Close
               </MDBBtn>
-              <MDBBtn color="primary">Save changes</MDBBtn>
             </MDBModalFooter>
           </MDBModal>
         </MDBContainer>
@@ -169,42 +168,3 @@ export class History1 extends Component {
     );
   }
 }
-
-/*
-          <MDBListGroupItem onClick={this.toggle(14)} active href="#">
-            <div className="d-flex w-100 justify-content-between">
-              <h5 className="mb-1">List group item heading</h5>
-              <small>3 days ago</small>
-            </div>
-            <p className="mb-1">
-              Donec id elit non mi porta gravida at eget metus. Maecenas sed
-              diam eget risus varius blandit.
-            </p>
-            <small>Donec id elit non mi porta.</small>
-            <span className="sr-only" name="All" />
-          </MDBListGroupItem>
-          <MDBListGroupItem onClick={this.toggle(14)} hover href="#">
-            <div className="d-flex w-100 justify-content-between">
-              <h5 className="mb-1">List group item heading</h5>
-              <small className="text-muted">3 days ago</small>
-            </div>
-            <p className="mb-1">
-              Donec id elit non mi porta gravida at eget metus. Maecenas sed
-              diam eget risus varius blandit.
-            </p>
-            <small className="text-muted">Donec id elit non mi porta.</small>
-            <span className="sr-only" name="Accepts" />
-          </MDBListGroupItem>
-          <MDBListGroupItem onClick={this.toggle(14)} hover href="#">
-            <div className="d-flex w-100 justify-content-between">
-              <h5 className="mb-1">List group item heading</h5>
-              <small className="text-muted">3 days ago</small>
-            </div>
-            <p className="mb-1">
-              Donec id elit non mi porta gravida at eget metus. Maecenas sed
-              diam eget risus varius blandit.
-            </p>
-            <small className="text-muted">Donec id elit non mi porta.</small>
-            <span className="sr-only" name="Requests" />
-          </MDBListGroupItem>
-*/

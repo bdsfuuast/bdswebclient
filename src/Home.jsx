@@ -8,6 +8,7 @@ import {
   ToastsStore,
   ToastsContainerPosition
 } from "react-toasts";
+import { FetchData } from "./services/FetchData";
 
 export class Home extends Component {
   constructor(props) {
@@ -21,15 +22,34 @@ export class Home extends Component {
   }
 
   componentDidMount() {
-    const pusher = new Pusher("0295f0431590b6afe528", {
+    var pusher = new Pusher("0295f0431590b6afe528", {
+      authEndpoint: "http://localhost:56280/home/AuthPusher",
       cluster: "ap2",
-      encrypted: true
+      forceTLS: true
     });
-    const channel = pusher.subscribe("my-channel");
+
+    var channel = pusher.subscribe("private-notify");
     channel.bind("my-event", data => {
       //this.setState({ message: data.message, showNotification: true });
+      FetchData("CheckNotifications")
+        .then(result => {
+          console.log(
+            result.message,
+            sessionStorage.getItem("nc"),
+            result.message > sessionStorage.getItem("nc"),
+            2 == NaN
+          );
+          if (result.message > sessionStorage.getItem("nc")) {
+            ToastsStore.info(
+              "You have " + result.message + " new notification(s)"
+            );
+          }
+          sessionStorage.setItem("nc", result.message);
+        })
+        .catch(errorMessage => {
+          console.log(errorMessage);
+        });
 
-      ToastsStore.info(data.message);
       //console.log(this.state);
     });
   }

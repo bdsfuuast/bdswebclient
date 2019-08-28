@@ -39,13 +39,20 @@ export class Profile1 extends Component {
             waves
           />
           <MDBCardBody>
-            <MDBCardTitle>Syam Ahmad</MDBCardTitle>
+            <MDBCardTitle>{this.props.Profile.FullName}</MDBCardTitle>
             <div className="d-flex justify-content-center">
               <MDBCard>
                 <MDBListGroup>
-                  <MDBListGroupItem>BS - Computer Science</MDBListGroupItem>
-                  <MDBListGroupItem>+92-300-5568299</MDBListGroupItem>
-                  <MDBListGroupItem>Blood Group A+</MDBListGroupItem>
+                  <MDBListGroupItem>
+                    {this.props.Profile.Degree} -{" "}
+                    {this.props.Profile.Department}
+                  </MDBListGroupItem>
+                  <MDBListGroupItem>
+                    {this.props.Profile.Contact}
+                  </MDBListGroupItem>
+                  <MDBListGroupItem>
+                    Blood Group {this.props.Profile.BloodGroup}
+                  </MDBListGroupItem>
                 </MDBListGroup>
               </MDBCard>
             </div>

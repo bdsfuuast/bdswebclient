@@ -18,8 +18,8 @@ export function FetchData(path) {
       })
       .then(function(data) {
         if (data.error) throw new Error(data.error_description);
+        console.log(data);
         resolve(data);
-        //access_token , expires_in , token_type
       })
       .catch(error => {
         reject(error.message);

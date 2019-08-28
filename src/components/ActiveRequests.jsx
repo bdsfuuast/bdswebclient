@@ -30,6 +30,7 @@ export class ActiveRequests extends Component {
     PostData("Accepts", this.state)
       .then(data => {
         ToastsStore.info(data.message);
+        this.props.OnRequestAccept(this.state.RequestID);
       })
       .catch(errorMessage => {
         ToastsStore.error(errorMessage);
@@ -51,7 +52,11 @@ export class ActiveRequests extends Component {
                 {single.Name} need your help at {single.Location}
               </h5>
               Please click the button to proceed
-              <MDBBtn name={single.ID} onClick={this.AcceptClick}>
+              <MDBBtn
+                disabled={single.Accepted}
+                name={single.ID}
+                onClick={this.AcceptClick}
+              >
                 Accept
               </MDBBtn>
             </MDBCardBody>

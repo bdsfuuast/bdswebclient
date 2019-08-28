@@ -1,5 +1,16 @@
 import React, { Component } from "react";
-import { MDBAlert } from "mdbreact";
+import {
+  MDBAlert,
+  MDBBtn,
+  MDBModal,
+  MDBModalBody,
+  MDBModalHeader,
+  MDBModalFooter,
+  MDBContainer,
+  MDBInput
+} from "mdbreact";
+import { PostData } from "../services/PostData";
+import { ToastsStore } from "react-toasts";
 //import { relative } from "path";
 
 export class Updates1 extends Component {
@@ -7,6 +18,7 @@ export class Updates1 extends Component {
     super(props);
 
     this.state = {
+      Location: "PIMS, Islamabad",
       notificationType: {
         1: "danger",
         2: "warning",
@@ -16,17 +28,52 @@ export class Updates1 extends Component {
         1: " fa-question",
         2: " fa-check",
         3: " fa-check-double"
-      }
+      },
+      modal: false
     };
   }
-  onNotification() {}
+
+  handleInputChange = event => {
+    const target = event.target;
+    const value = target.type === "checkbox" ? target.checked : target.value;
+    const name = target.name;
+
+    this.setState({
+      [name]: value
+    });
+  };
+
+  toggleDonationConfirmModel = () => {
+    this.setState({
+      modal: !this.state.modal
+    });
+  };
+  ConfirmClick = e => {
+    let id = e.target.name;
+    console.log(id);
+    this.setState({ NotificationID: id, modal: !this.state.modal });
+  };
+  DonationConfirmed = () => {
+    PostData("Transfusions", {
+      NotificationID: this.state.NotificationID,
+      Location: this.state.Location
+    })
+      .then(data => {
+        ToastsStore.info(data.message);
+        this.props.OnDonationConfirmed(this.state.NotificationID);
+      })
+      .catch(errorMessage => {
+        ToastsStore.error(errorMessage);
+      });
+    this.toggleDonationConfirmModel();
+  };
   render() {
     if (!this.props.Notifications) {
       return <div>No notificatins to be shown...!</div>;
     }
     let Notifications = this.props.Notifications.map(single => {
       return (
-        <a href="#">
+        <a key={this.props.Notifications.indexOf(single)} href="#">
           <MDBAlert
             key={single.ID}
             color={this.state.notificationType[single.Activity]}
@@ -46,10 +93,65 @@ export class Updates1 extends Component {
               </div>
               <small style={{ flex: 2 }}>{single.Time}</small>
             </div>
+
+            <MDBBtn
+              name={single.ID}
+              onClick={this.ConfirmClick}
+              size="sm"
+              color="warning"
+              hidden={single.Confirmed || single.Activity != "2"}
+              style={{ padding: "10px" }}
+            >
+              Confirm blood received
+            </MDBBtn>
           </MDBAlert>
         </a>
       );
     });
-    return <React.Fragment>{Notifications}</React.Fragment>;
+    return (
+      <React.Fragment>
+        {Notifications}
+        <MDBModal
+          isOpen={this.state.modal}
+          toggle={this.toggleDonationConfirmModel}
+        >
+          <MDBModalHeader toggle={this.toggle}>
+            Are you sure you have received the blood?
+          </MDBModalHeader>
+          <MDBModalBody>
+            <MDBContainer>
+              <form>
+                <div className="grey-text">
+                  <small>
+                    Where did you received the blood e.g. "AFIT, Rawalpindi"
+                  </small>
+                  <MDBInput
+                    name="Location"
+                    value={this.state.Location}
+                    onChange={this.handleInputChange}
+                    label="Location"
+                    icon="map"
+                    group
+                    type="text"
+                    validate
+                    error="wrong"
+                    success="right"
+                    placeholder=""
+                  ></MDBInput>
+                </div>
+              </form>
+            </MDBContainer>
+          </MDBModalBody>
+          <MDBModalFooter>
+            <MDBBtn color="secondary" onClick={this.toggleDonationConfirmModel}>
+              Close
+            </MDBBtn>
+            <MDBBtn color="primary" onClick={this.DonationConfirmed}>
+              Yes, Confirm
+            </MDBBtn>
+          </MDBModalFooter>
+        </MDBModal>
+      </React.Fragment>
+    );
   }
 }

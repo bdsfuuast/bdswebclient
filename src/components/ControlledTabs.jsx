@@ -12,6 +12,7 @@ import { History1 } from "./History1";
 import { Settings1 } from "./Settings1";
 
 import { FetchData } from "../services/FetchData";
+import { PostData } from "../services/PostData";
 
 export class ControlledTabs extends Component {
   constructor(props, context) {
@@ -20,7 +21,8 @@ export class ControlledTabs extends Component {
       key: "home",
       Notifications: "",
       History: "",
-      Requests: ""
+      Requests: "",
+      Profile: ""
     };
   }
   onClick = nr => () => {
@@ -28,6 +30,29 @@ export class ControlledTabs extends Component {
       radio: nr
     });
   };
+  RequestAccepted = id => {
+    const Accepted = true;
+    this.setState({
+      Requests: this.state.Requests.map(el =>
+        el.ID == id ? { ...el, Accepted } : el
+      )
+    });
+  };
+  DonationConfirmed = id => {
+    const Confirmed = true;
+    this.setState({
+      Notifications: this.state.Notifications.map(el =>
+        el.ID == id ? { ...el, Confirmed } : el
+      )
+    });
+  };
+  NotificationsSeen() {
+    PostData("Notifications")
+      .then()
+      .catch(errorMessage => {
+        console.error(errorMessage);
+      });
+  }
   onTabSelect = key => {
     this.setState({ key });
     switch (key) {
@@ -35,6 +60,7 @@ export class ControlledTabs extends Component {
         FetchData("notifications")
           .then(result => {
             this.setState({ Notifications: result });
+            this.NotificationsSeen();
           })
           .catch(errorMessage => {
             console.log(errorMessage);
@@ -61,6 +87,16 @@ export class ControlledTabs extends Component {
           });
         break;
       }
+      case "profile": {
+        FetchData("profile")
+          .then(result => {
+            this.setState({ Profile: result });
+          })
+          .catch(errorMessage => {
+            console.log(errorMessage);
+          });
+        break;
+      }
       default:
         break;
     }
@@ -75,7 +111,7 @@ export class ControlledTabs extends Component {
               activeKey={this.state.key}
               onSelect={this.onTabSelect}
             >
-              <Tab eventKey="home" title="Home">
+              <Tab eventKey="home" title="Home" tabClassName="tab class">
                 <TabLayout>
                   <MDBCard>
                     <MDBCardBody>
@@ -86,12 +122,18 @@ export class ControlledTabs extends Component {
               </Tab>
               <Tab eventKey="updates" title="Updates">
                 <TabLayout>
-                  <Updates1 Notifications={this.state.Notifications} />
+                  <Updates1
+                    Notifications={this.state.Notifications}
+                    OnDonationConfirmed={this.DonationConfirmed}
+                  />
                 </TabLayout>
               </Tab>
               <Tab eventKey="requests" title="Active Requests">
                 <TabLayout>
-                  <ActiveRequests Requests={this.state.Requests} />
+                  <ActiveRequests
+                    Requests={this.state.Requests}
+                    OnRequestAccept={this.RequestAccepted}
+                  />
                 </TabLayout>
               </Tab>
               <Tab eventKey="history" title="History">
@@ -101,7 +143,7 @@ export class ControlledTabs extends Component {
               </Tab>
               <Tab eventKey="profile" title="Profile">
                 <TabLayout width="50">
-                  <Profile1 />
+                  <Profile1 Profile={this.state.Profile} />
                 </TabLayout>
               </Tab>
               <Tab eventKey="settings" title="Settings">
