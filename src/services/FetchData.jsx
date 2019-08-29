@@ -1,6 +1,7 @@
+import { ApiUrl } from "../../variable";
 export function FetchData(path) {
   // const url = "http://agpstore.000webhostapp.com/postform.php";
-  const url = "http://localhost:56280/api/" + path;
+  const url = ApiUrl + path;
   // let AuthData = sessionStorage.getItem("access_token");
   // console.log(AuthData);
   // return;

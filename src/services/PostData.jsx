@@ -1,6 +1,8 @@
+import { ApiUrl } from "../../variable";
+
 export function PostData(path, data) {
   // const url = "http://agpstore.000webhostapp.com/postform.php";
-  const url = "http://localhost:56280/api/" + path;
+  const url = ApiUrl + path;
   console.log(data);
   let fetchData = {
     method: "POST",

@@ -1,6 +1,8 @@
+import { TokenUrl } from "../../variable";
+
 export function LoginService(data) {
   // const url = "http://agpstore.000webhostapp.com/postform.php";
-  const url = "http://localhost:56280/token";
+  const url = TokenUrl;
   const bodydata =
     "username=" +
     data.username +
