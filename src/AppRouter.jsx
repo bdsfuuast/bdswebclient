@@ -9,8 +9,8 @@ export class AppRouter extends Component {
     return (
       <Router>
         <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/login" component={Login} />
+          <Route exact path="/" component={Login} />
+          <Route path="/home" component={Home} />
           <Route path="*" component={NotFound} />
         </Switch>
       </Router>

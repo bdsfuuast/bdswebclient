@@ -14,6 +14,7 @@ import {
 } from "mdbreact";
 
 import { HistoryItemDetail } from "./HistoryItemDetail";
+import timeDifference from "../services/TimeService";
 
 export class History1 extends Component {
   constructor(props, context) {
@@ -88,7 +89,7 @@ export class History1 extends Component {
         <MDBListGroupItem key={this.props.History.indexOf(element)} hover>
           <div className="d-flex w-100 justify-content-between">
             <h5 className="mb-1">{element.Title}</h5>
-            <small className="text-muted">{element.Time}</small>
+            <small className="text-muted">{timeDifference(element.Time)}</small>
           </div>
           <a
             onClick={this.ItemClicked}

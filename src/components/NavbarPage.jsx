@@ -28,7 +28,7 @@ class NavbarPage extends Component {
     }));
 
   render() {
-    if (this.state.Logout) return <Redirect to="login" />;
+    if (this.state.Logout) return <Redirect to="/" />;
     return (
       <MDBNavbar color="red" dark expand="md" style={{ marginTop: "20px" }}>
         <MDBNavbarBrand>

@@ -36,7 +36,7 @@ export class Login extends Component {
 
   render() {
     if (this.state.redirectToHome) {
-      return <Redirect to="/" />;
+      return <Redirect to="/home" />;
     }
     return (
       <React.Fragment>

@@ -56,14 +56,14 @@ export class Profile1 extends Component {
                 </MDBListGroup>
               </MDBCard>
             </div>
-            <MDBBtn
+            {/* <MDBBtn
               outline
               onClick={this.toggleProfileUpdateModel}
               href="#"
               className="mt-3"
             >
               Update
-            </MDBBtn>
+            </MDBBtn> */}
           </MDBCardBody>
         </MDBCard>
         <MDBModal

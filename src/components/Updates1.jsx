@@ -11,6 +11,7 @@ import {
 } from "mdbreact";
 import { PostData } from "../services/PostData";
 import { ToastsStore } from "react-toasts";
+import timeDifference from "../services/TimeService";
 //import { relative } from "path";
 
 export class Updates1 extends Component {
@@ -91,7 +92,7 @@ export class Updates1 extends Component {
                 <h5>{single.Title}</h5>
                 <p style={{ margin: 0 }}>{single.Body}</p>
               </div>
-              <small style={{ flex: 2 }}>{single.Time}</small>
+              <small style={{ flex: 2 }}>{timeDifference(single.Time)}</small>
             </div>
 
             <MDBBtn

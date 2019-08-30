@@ -147,7 +147,7 @@ export class ControlledTabs extends Component {
                 </TabLayout>
               </Tab>
               <Tab eventKey="settings" title="Settings">
-                <TabLayout width="100">
+                <TabLayout>
                   <Settings1 />
                 </TabLayout>
               </Tab>
