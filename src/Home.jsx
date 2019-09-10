@@ -9,6 +9,7 @@ import {
   ToastsContainerPosition
 } from "react-toasts";
 import { FetchData } from "./services/FetchData";
+import { BaseUrl } from "./variable";
 
 export class Home extends Component {
   constructor(props) {
@@ -23,7 +24,12 @@ export class Home extends Component {
 
   componentDidMount() {
     var pusher = new Pusher("0295f0431590b6afe528", {
-      authEndpoint: "http://localhost:56280/home/AuthPusher",
+      authEndpoint: BaseUrl + "AuthPusher",
+      auth: {
+        headers: {
+          Authorization: "bearer " + sessionStorage.getItem("access_token")
+        }
+      },
       cluster: "ap2",
       forceTLS: true
     });

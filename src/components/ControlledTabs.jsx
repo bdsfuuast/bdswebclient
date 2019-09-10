@@ -120,7 +120,7 @@ export class ControlledTabs extends Component {
                   </MDBCard>
                 </TabLayout>
               </Tab>
-              <Tab eventKey="updates" title="Updates">
+              <Tab eventKey="updates" title="Notifications">
                 <TabLayout>
                   <Updates1
                     Notifications={this.state.Notifications}

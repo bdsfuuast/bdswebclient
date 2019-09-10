@@ -5,7 +5,7 @@ export default function timeDifference(previous) {
   var msPerMonth = msPerDay * 30;
   var msPerYear = msPerDay * 365;
 
-  var elapsed = Date.now() + 18000000 - Date.parse(previous);
+  var elapsed = Date.now() - Date.parse(previous);
 
   if (elapsed < msPerMinute) {
     return Math.round(elapsed / 1000) + " seconds ago";
