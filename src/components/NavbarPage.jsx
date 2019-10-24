@@ -30,7 +30,7 @@ class NavbarPage extends Component {
   render() {
     if (this.state.Logout) return <Redirect to="/" />;
     return (
-      <MDBNavbar color="red" dark expand="md" style={{ marginTop: "20px" }}>
+      <MDBNavbar color="red" dark expand="md">
         <MDBNavbarBrand>
           <strong className="white-text">Blood Donation Society</strong>
         </MDBNavbarBrand>
@@ -63,33 +63,3 @@ class NavbarPage extends Component {
 }
 
 export default NavbarPage;
-/*
-<MDBNavItem>
-                <MDBPopover placement="bottom" popover clickable id="popper2">
-                  <MDBNavLink
-                    className="waves-effect waves-light d-flex align-items-center"
-                    to="#!"
-                  >
-                    1
-                    <MDBIcon icon="envelope" className="ml-1" />
-                  </MDBNavLink>
-                  <div>
-                    <MDBPopoverHeader>popover on top</MDBPopoverHeader>
-                    <MDBPopoverBody>
-                      Sed posuere consectetur est at lobortis. Aenean eu leo
-                      quam. Pellentesque ornare sem lacinia quam venenatis
-                      vestibulum.
-                    </MDBPopoverBody>
-                  </div>
-                </MDBPopover>
-              </MDBNavItem>
-              <MDBNavItem>
-                <MDBNavLink
-                  className="waves-effect waves-light d-flex align-items-center"
-                  to="#!"
-                >
-                  1
-                  <MDBIcon icon="envelope" className="ml-1" />
-                </MDBNavLink>
-              </MDBNavItem>
-              */

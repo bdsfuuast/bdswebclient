@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { MDBBtn, MDBIcon, MDBInput } from "mdbreact";
 import { PostData } from "../services/PostData";
 import { ToastsStore } from "react-toasts";
+import Loader from "../Loader";
 
 export class Form1 extends Component {
   constructor(props) {
@@ -11,7 +12,8 @@ export class Form1 extends Component {
       Location: "PIMS, Islamabad",
       Description: "short description...",
       BloodGroup: "4",
-      Count: "5"
+      Count: "5",
+      ShowLoader: "none"
     };
   }
 
@@ -32,12 +34,15 @@ export class Form1 extends Component {
   };
 
   handleSubmit = event => {
+    this.setState({ ShowLoader: "block" });
     event.preventDefault();
     PostData("requests", this.state)
       .then(data => {
+        this.setState({ ShowLoader: "none" });
         ToastsStore.info(data.message);
       })
       .catch(errorMessage => {
+        this.setState({ ShowLoader: "none" });
         ToastsStore.error(errorMessage);
       });
   };
@@ -46,7 +51,7 @@ export class Form1 extends Component {
     return (
       <React.Fragment>
         <form onSubmit={this.handleSubmit}>
-          <p className="h4 text-center py-4">
+          <p className="h4 text-center py-2">
             Let other know you need their help!
           </p>
           <label
@@ -87,13 +92,14 @@ export class Form1 extends Component {
             type="textarea"
             label="Enter Short Description"
           />
-          <div className="text-center py-4 mt-3">
+          <div className="text-center">
             <MDBBtn className="btn btn-outline-purple" type="submit">
               Send
               <MDBIcon far icon="paper-plane" className="ml-2" />
             </MDBBtn>
           </div>
         </form>
+        <Loader ShowLoader={this.state.ShowLoader}></Loader>
       </React.Fragment>
     );
   }

@@ -3,8 +3,21 @@ import "./App.css";
 import { AppRouter } from "./AppRouter";
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      title: "Message",
+      message: "",
+      showNotification: false
+    };
+  }
   render() {
-    return <AppRouter />;
+    return (
+      <React.Fragment>
+        <AppRouter />
+      </React.Fragment>
+    );
   }
 }
 

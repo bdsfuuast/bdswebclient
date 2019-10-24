@@ -21,7 +21,6 @@ export class Home extends Component {
       showNotification: false
     };
   }
-
   componentDidMount() {
     var pusher = new Pusher("0295f0431590b6afe528", {
       authEndpoint: BaseUrl + "AuthPusher",

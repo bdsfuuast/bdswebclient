@@ -3,6 +3,7 @@ import { MDBInput, MDBBtn, MDBCard, MDBCardBody, MDBContainer } from "mdbreact";
 import { LoginService } from "./services/LoginService";
 import { Redirect } from "react-router-dom";
 import { ToastsContainer, ToastsStore } from "react-toasts";
+import Loader from "./Loader";
 
 export class Login extends Component {
   constructor(props) {
@@ -11,7 +12,8 @@ export class Login extends Component {
     this.state = {
       username: "m1@g.c",
       password: "123",
-      redirectToHome: false
+      redirectToHome: false,
+      ShowLoader: "none"
     };
   }
   handleInputChange = event => {
@@ -24,12 +26,15 @@ export class Login extends Component {
     });
   };
   handleSubmit = e => {
+    this.setState({ ShowLoader: "block" });
     e.preventDefault();
     LoginService(this.state)
       .then(result => {
+        this.setState({ ShowLoader: "none" });
         this.setState({ redirectToHome: result });
       })
       .catch(errorMessage => {
+        this.setState({ ShowLoader: "none" });
         ToastsStore.error(errorMessage);
       });
   };
@@ -83,6 +88,8 @@ export class Login extends Component {
           </div>
         </MDBContainer>
         <ToastsContainer store={ToastsStore} />
+
+        <Loader ShowLoader={this.state.ShowLoader}></Loader>
       </React.Fragment>
     );
   }
