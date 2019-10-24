@@ -19,19 +19,11 @@ export function FetchData(path) {
       })
       .then(function(data) {
         if (data.error) throw new Error(data.error_description);
-        console.log(data);
         resolve(data);
       })
       .catch(error => {
+        console.log(error);
         reject(error.message);
       });
   });
-
-  // .then(function(e) {
-  //   if (e.status !== 200) throw new Error("Something went wrong");
-  //   console.log(e);
-  // })
-  // .catch(error => {
-  //   console.log(error);
-  // });
 }

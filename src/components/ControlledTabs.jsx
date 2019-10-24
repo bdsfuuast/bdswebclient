@@ -57,18 +57,15 @@ export class ControlledTabs extends Component {
       });
   }
   onTabSelect = key => {
-    this.setState({ ShowLoader: "block" });
     this.setState({ key });
     switch (key) {
       case "updates": {
         FetchData("notifications")
           .then(result => {
             this.setState({ Notifications: result });
-            this.setState({ ShowLoader: "none" });
             this.NotificationsSeen();
           })
           .catch(errorMessage => {
-            this.setState({ ShowLoader: "none" });
             console.log(errorMessage);
           });
         break;
@@ -77,10 +74,8 @@ export class ControlledTabs extends Component {
         FetchData("history")
           .then(result => {
             this.setState({ History: result });
-            this.setState({ ShowLoader: "none" });
           })
           .catch(errorMessage => {
-            this.setState({ ShowLoader: "none" });
             console.log(errorMessage);
           });
         break;
@@ -89,10 +84,8 @@ export class ControlledTabs extends Component {
         FetchData("requests")
           .then(result => {
             this.setState({ Requests: result });
-            this.setState({ ShowLoader: "none" });
           })
           .catch(errorMessage => {
-            this.setState({ ShowLoader: "none" });
             console.log(errorMessage);
           });
         break;
@@ -101,16 +94,13 @@ export class ControlledTabs extends Component {
         FetchData("profile")
           .then(result => {
             this.setState({ Profile: result });
-            this.setState({ ShowLoader: "none" });
           })
           .catch(errorMessage => {
-            this.setState({ ShowLoader: "none" });
             console.log(errorMessage);
           });
         break;
       }
       default:
-        this.setState({ ShowLoader: "none" });
         break;
     }
   };

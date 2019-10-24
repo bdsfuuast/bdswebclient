@@ -11,11 +11,12 @@ import {
 } from "mdbreact";
 import { ToastsStore } from "react-toasts";
 import { PostData } from "../services/PostData";
+import Loader from "../Loader";
 
 export class ActiveRequests extends Component {
   constructor(props) {
     super(props);
-    this.state = { RequestID: 0, modal: false };
+    this.state = { RequestID: 0, modal: false, ShowLoader: "none" };
   }
   AcceptClick = e => {
     let id = e.target.name;
@@ -27,12 +28,15 @@ export class ActiveRequests extends Component {
     });
   };
   AcceptConfirmed = () => {
+    this.setState({ ShowLoader: "block" });
     PostData("Accepts", this.state)
       .then(data => {
-        ToastsStore.info(data.message);
         this.props.OnRequestAccept(this.state.RequestID);
+        this.setState({ ShowLoader: "none" });
+        ToastsStore.info(data.message);
       })
       .catch(errorMessage => {
+        this.setState({ ShowLoader: "none" });
         ToastsStore.error(errorMessage);
       });
     this.setState({
@@ -84,6 +88,7 @@ export class ActiveRequests extends Component {
             </MDBBtn>
           </MDBModalFooter>
         </MDBModal>
+        <Loader ShowLoader={this.state.ShowLoader}></Loader>
       </React.Fragment>
     );
   }

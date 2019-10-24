@@ -12,6 +12,7 @@
     "react-scripts": "3.0.1",
     "react-toasts": "^3.0.3"
   },
+  "homepage": ".",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

@@ -51,33 +51,6 @@ export class History1 extends Component {
   };
 
   render() {
-    let elementsToFilter = [
-      {
-        type: "Donnation",
-        heading: "Donnations",
-        days: "3 days ago",
-        details: "Donec id elit non mi porta gravida at eget metus. blandit."
-      },
-      {
-        type: "Request",
-        heading: "Requests",
-        days: "4 days ago",
-        details: "Donec id elit non mi porta gravida at eget metus. blandit."
-      },
-      {
-        type: "Request",
-        heading: "Requests",
-        days: "4 days ago",
-        details: "Donec id elit non mi porta gravida at eget metus. blandit."
-      },
-      {
-        type: "Accept",
-        heading: "Accepts",
-        days: "2 days ago",
-        details: "Donec id elit non mi porta gravida at eget metus. blandit."
-      }
-    ];
-
     if (!this.props.History) {
       return <div>Sorry! No data be shown.</div>;
     }

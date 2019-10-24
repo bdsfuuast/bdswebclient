@@ -3,7 +3,6 @@ import { ApiUrl } from "../variable";
 export function PostData(path, data) {
   // const url = "http://agpstore.000webhostapp.com/postform.php";
   const url = ApiUrl + path;
-  console.log(data);
   let fetchData = {
     method: "POST",
     headers: {
@@ -29,12 +28,4 @@ export function PostData(path, data) {
         reject(error.message);
       });
   });
-
-  // .then(function(e) {
-  //   if (e.status !== 200) throw new Error("Something went wrong");
-  //   console.log(e);
-  // })
-  // .catch(error => {
-  //   console.log(error);
-  // });
 }

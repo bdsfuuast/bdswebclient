@@ -11,7 +11,7 @@ export class Form1 extends Component {
     this.state = {
       Location: "PIMS, Islamabad",
       Description: "short description...",
-      BloodGroup: "4",
+      BloodGroup: "0",
       Count: "5",
       ShowLoader: "none"
     };

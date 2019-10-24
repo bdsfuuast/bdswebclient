@@ -12,6 +12,7 @@ import {
 import { PostData } from "../services/PostData";
 import { ToastsStore } from "react-toasts";
 import timeDifference from "../services/TimeService";
+import Loader from "../Loader";
 //import { relative } from "path";
 
 export class Updates1 extends Component {
@@ -30,7 +31,8 @@ export class Updates1 extends Component {
         2: " fa-check",
         3: " fa-check-double"
       },
-      modal: false
+      modal: false,
+      ShowLoader: "none"
     };
   }
 
@@ -55,15 +57,18 @@ export class Updates1 extends Component {
     this.setState({ NotificationID: id, modal: !this.state.modal });
   };
   DonationConfirmed = () => {
+    this.setState({ ShowLoader: "block" });
     PostData("Transfusions", {
       NotificationID: this.state.NotificationID,
       Location: this.state.Location
     })
       .then(data => {
-        ToastsStore.info(data.message);
         this.props.OnDonationConfirmed(this.state.NotificationID);
+        this.setState({ ShowLoader: "none" });
+        ToastsStore.info(data.message);
       })
       .catch(errorMessage => {
+        this.setState({ ShowLoader: "none" });
         ToastsStore.error(errorMessage);
       });
     this.toggleDonationConfirmModel();
@@ -152,6 +157,7 @@ export class Updates1 extends Component {
             </MDBBtn>
           </MDBModalFooter>
         </MDBModal>
+        <Loader ShowLoader={this.state.ShowLoader}></Loader>
       </React.Fragment>
     );
   }
