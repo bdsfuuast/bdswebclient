@@ -9,7 +9,7 @@ import {
   ToastsContainerPosition
 } from "react-toasts";
 import { FetchData } from "./services/FetchData";
-import { BaseUrl } from "./variable";
+import { ApiUrl } from "./variable";
 
 export class Home extends Component {
   constructor(props) {
@@ -23,16 +23,15 @@ export class Home extends Component {
   }
   componentDidMount() {
     var pusher = new Pusher("0295f0431590b6afe528", {
-      authEndpoint: BaseUrl + "AuthPusher",
+      authEndpoint: ApiUrl + "AuthPusher",
       auth: {
         headers: {
-          Authorization: "bearer " + sessionStorage.getItem("access_token")
+          Authorization: sessionStorage.getItem("access_token")
         }
       },
       cluster: "ap2",
       forceTLS: true
     });
-
     var channel = pusher.subscribe("private-notify");
     channel.bind("my-event", data => {
       //this.setState({ message: data.message, showNotification: true });
@@ -54,8 +53,6 @@ export class Home extends Component {
         .catch(errorMessage => {
           console.log(errorMessage);
         });
-
-      //console.log(this.state);
     });
   }
   render() {

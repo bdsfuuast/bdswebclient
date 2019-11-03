@@ -7,7 +7,7 @@ export function FetchData(path) {
   // return;
   let fetchData = {
     headers: {
-      Authorization: "bearer " + sessionStorage.getItem("access_token")
+      Authorization: sessionStorage.getItem("access_token")
     }
   };
   return new Promise((resolve, reject) => {

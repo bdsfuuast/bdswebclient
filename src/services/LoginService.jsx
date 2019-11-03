@@ -1,7 +1,7 @@
 import { TokenUrl } from "../variable";
 
 export function LoginService(data) {
-  // const url = "http://agpstore.000webhostapp.com/postform.php";
+  // const url = "http://agpstore.000webhostapp.com/postform.php";text/plain;charset=UTF-8
   const url = TokenUrl;
   const bodydata =
     "username=" +
@@ -12,9 +12,9 @@ export function LoginService(data) {
   let fetchData = {
     method: "POST",
     headers: {
-      "content-type": "text/plain;charset=UTF-8"
+      "content-type": "application/json"
     },
-    body: bodydata
+    body: JSON.stringify(data)
   };
   return new Promise((resolve, reject) => {
     fetch(url, fetchData)
