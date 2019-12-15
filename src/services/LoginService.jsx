@@ -3,12 +3,12 @@ import { TokenUrl } from "../variable";
 export function LoginService(data) {
   // const url = "http://agpstore.000webhostapp.com/postform.php";text/plain;charset=UTF-8
   const url = TokenUrl;
-  const bodydata =
-    "username=" +
-    data.username +
-    "&password=" +
-    data.password +
-    "&grant_type=password";
+  // const bodydata =
+  //   "username=" +
+  //   data.username +
+  //   "&password=" +
+  //   data.password +
+  //   "&grant_type=password";
   let fetchData = {
     method: "POST",
     headers: {

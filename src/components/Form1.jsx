@@ -1,8 +1,20 @@
 import React, { Component } from "react";
-import { MDBBtn, MDBIcon, MDBInput } from "mdbreact";
+import {
+  MDBBtn,
+  MDBIcon,
+  MDBInput,
+  MDBContainer,
+  MDBModal,
+  MDBModalBody,
+  MDBModalHeader,
+  MDBModalFooter
+} from "mdbreact";
 import { PostData } from "../services/PostData";
+import { FetchData } from "../services/FetchData";
 import { ToastsStore } from "react-toasts";
 import Loader from "../Loader";
+import { Container, Button } from "react-floating-action-button";
+import { ActiveRequests } from "./ActiveRequests";
 
 export class Form1 extends Component {
   constructor(props) {
@@ -13,10 +25,34 @@ export class Form1 extends Component {
       Description: "short description...",
       BloodGroup: "0",
       Count: "5",
-      ShowLoader: "none"
+      ShowLoader: "none",
+      RequestsModal: false,
+      Requests: null
     };
   }
+  RequestAccepted = id => {
+    this.toggleRequestsModal();
+    // const Accepted = true;
+    // this.setState({
+    //   Requests: this.state.Requests.map(el =>
+    //     el.ID === id ? { ...el, Accepted } : el
+    //   )
+    // });
+  };
 
+  OpenRequestsModel = () => {
+    FetchData("requests")
+      .then(result => {
+        this.setState({ Requests: result });
+        this.toggleRequestsModal();
+      })
+      .catch(errorMessage => {
+        console.log(errorMessage);
+      });
+  };
+  toggleRequestsModal = () => {
+    this.setState({ RequestsModal: !this.state.RequestsModal });
+  };
   handleInputChange = event => {
     const target = event.target;
     const value = target.type === "checkbox" ? target.checked : target.value;
@@ -99,6 +135,33 @@ export class Form1 extends Component {
             </MDBBtn>
           </div>
         </form>
+        <Container>
+          <Button
+            tooltip="Active Requests"
+            icon="fas fa-hand-holding-heart"
+            onClick={this.OpenRequestsModel}
+          />
+        </Container>
+        <MDBContainer>
+          <MDBModal
+            size="lg"
+            isOpen={this.state.RequestsModal}
+            toggle={this.toggleRequestsModal}
+          >
+            <MDBModalHeader>Active Requests</MDBModalHeader>
+            <MDBModalBody>
+              <ActiveRequests
+                Requests={this.state.Requests}
+                OnRequestAccept={this.RequestAccepted}
+              />
+            </MDBModalBody>
+            <MDBModalFooter>
+              <MDBBtn color="secondary" onClick={this.toggleRequestsModal}>
+                Close
+              </MDBBtn>
+            </MDBModalFooter>
+          </MDBModal>
+        </MDBContainer>
         <Loader ShowLoader={this.state.ShowLoader}></Loader>
       </React.Fragment>
     );

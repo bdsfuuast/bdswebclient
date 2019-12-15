@@ -107,14 +107,14 @@ export class Settings1 extends Component {
     );
   }
 }
-{
-  // handleSwitchChange = nr => () => {
-  //   let switchNumber = `switch${nr}`;
-  //   this.setState({
-  //     [switchNumber]: !this.state[switchNumber]
-  //   });
-  // };
-  /* <div className="container">
+
+// handleSwitchChange = nr => () => {
+//   let switchNumber = `switch${nr}`;
+//   this.setState({
+//     [switchNumber]: !this.state[switchNumber]
+//   });
+// };
+/* <div className="container">
         <div className="container" align="right">
           <MDBBadge color="light" className="m-2">
             Status:
@@ -185,4 +185,3 @@ export class Settings1 extends Component {
           </Row>
         </Tab.Container>
       </div> */
-}

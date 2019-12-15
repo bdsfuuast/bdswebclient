@@ -9,7 +9,7 @@ import {
   ToastsContainerPosition
 } from "react-toasts";
 import { FetchData } from "./services/FetchData";
-import { ApiUrl } from "./variable";
+import { ApiUrl, PusherKey } from "./variable";
 
 export class Home extends Component {
   constructor(props) {
@@ -18,11 +18,12 @@ export class Home extends Component {
     this.state = {
       title: "Message",
       message: "",
-      showNotification: false
+      showNotification: false,
+      logedIn: false
     };
   }
   componentDidMount() {
-    var pusher = new Pusher("0295f0431590b6afe528", {
+    var pusher = new Pusher(PusherKey, {
       authEndpoint: ApiUrl + "AuthPusher",
       auth: {
         headers: {
@@ -37,12 +38,6 @@ export class Home extends Component {
       //this.setState({ message: data.message, showNotification: true });
       FetchData("CheckNotifications")
         .then(result => {
-          console.log(
-            result.message,
-            sessionStorage.getItem("nc"),
-            result.message > sessionStorage.getItem("nc"),
-            2 == NaN
-          );
           if (result.message > sessionStorage.getItem("nc")) {
             ToastsStore.info(
               "You have " + result.message + " new notification(s)"
@@ -54,8 +49,16 @@ export class Home extends Component {
           console.log(errorMessage);
         });
     });
+    FetchData("ping")
+      .then(result => {
+        this.setState({ logedIn: result });
+      })
+      .catch(errorMessage => {});
   }
   render() {
+    if (!this.state.logedIn) {
+      return <React.Fragment />;
+    }
     return (
       <React.Fragment>
         <MDBContainer>

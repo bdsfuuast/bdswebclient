@@ -75,7 +75,7 @@ export class Login extends Component {
                       onChange={this.handleInputChange}
                     />
                     <div className="container" align="right">
-                      <a href="#">Forgot Password</a>
+                      <a>Forgot Password</a>
                     </div>
                   </div>
                   <div className="text-center">

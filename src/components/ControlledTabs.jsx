@@ -6,7 +6,6 @@ import { TabLayout } from "./TabLayout";
 
 import { Form1 } from "./Form1";
 import { Updates1 } from "./Updates1";
-import { ActiveRequests } from "./ActiveRequests";
 import { Profile1 } from "./Profile1";
 import { History1 } from "./History1";
 import { Settings1 } from "./Settings1";
@@ -23,24 +22,16 @@ export class ControlledTabs extends Component {
       key: "home",
       Notifications: "",
       History: "",
-      Requests: "",
+      //Requests: "",
       Profile: "",
       ShowLoader: "none"
     };
   }
-  onClick = nr => () => {
-    this.setState({
-      radio: nr
-    });
-  };
-  RequestAccepted = id => {
-    const Accepted = true;
-    this.setState({
-      Requests: this.state.Requests.map(el =>
-        el.ID == id ? { ...el, Accepted } : el
-      )
-    });
-  };
+  // onClick = nr => () => {
+  //   this.setState({
+  //     radio: nr
+  //   });
+  // };
   DonationConfirmed = id => {
     const Confirmed = true;
     this.setState({
@@ -80,16 +71,16 @@ export class ControlledTabs extends Component {
           });
         break;
       }
-      case "requests": {
-        FetchData("requests")
-          .then(result => {
-            this.setState({ Requests: result });
-          })
-          .catch(errorMessage => {
-            console.log(errorMessage);
-          });
-        break;
-      }
+      // case "requests": {
+      //   FetchData("requests")
+      //     .then(result => {
+      //       this.setState({ Requests: result });
+      //     })
+      //     .catch(errorMessage => {
+      //       console.log(errorMessage);
+      //     });
+      //   break;
+      //}
       case "profile": {
         FetchData("profile")
           .then(result => {
@@ -131,14 +122,14 @@ export class ControlledTabs extends Component {
                   />
                 </TabLayout>
               </Tab>
-              <Tab eventKey="requests" title="Active Requests">
+              {/* <Tab eventKey="requests" title="Active Requests">
                 <TabLayout>
                   <ActiveRequests
                     Requests={this.state.Requests}
                     OnRequestAccept={this.RequestAccepted}
                   />
                 </TabLayout>
-              </Tab>
+              </Tab> */}
               <Tab eventKey="history" title="History">
                 <TabLayout>
                   <History1 History={this.state.History} />

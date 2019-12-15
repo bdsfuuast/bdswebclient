@@ -8,14 +8,19 @@ export function FetchData(path) {
   let fetchData = {
     headers: {
       Authorization: sessionStorage.getItem("access_token")
-    }
+    },
+    credentials: "include"
   };
   return new Promise((resolve, reject) => {
     fetch(url, fetchData)
       .then(res => {
-        if (res.status !== 200)
-          throw new Error("Something went wrong Error: " + res.statusText);
-        return res.json();
+        if (res.status === 401) {
+          window.location.href = "/";
+          return;
+        }
+        if (res.status === 200 || res.status === 400) return res.json();
+
+        throw new Error("Something went wrong Error: " + res.status);
       })
       .then(function(data) {
         if (data.error) throw new Error(data.error_description);

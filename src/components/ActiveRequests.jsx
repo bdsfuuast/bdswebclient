@@ -11,22 +11,43 @@ import {
 } from "mdbreact";
 import { ToastsStore } from "react-toasts";
 import { PostData } from "../services/PostData";
+import { FetchData } from "../services/FetchData";
 import Loader from "../Loader";
 
 export class ActiveRequests extends Component {
   constructor(props) {
     super(props);
-    this.state = { RequestID: 0, modal: false, ShowLoader: "none" };
+    this.state = {
+      RequestID: 0,
+      modal: false,
+      ShowLoader: "none",
+      RequestDetail: "",
+      Message: ""
+    };
   }
+
   AcceptClick = e => {
     let id = e.target.name;
-    this.setState({ RequestID: id, modal: !this.state.modal });
+    FetchData("Requests/d?id=" + id)
+      .then(data => {
+        this.setState({
+          RequestDetail: data.Detail,
+          Message: data.Message,
+          modal: !this.state.modal,
+          RequestID: id
+        });
+      })
+      .catch(errorMessage => {
+        this.setState({ ShowLoader: "none" });
+        ToastsStore.error(errorMessage);
+      });
   };
   toggleAcceptConfirmModel = () => {
     this.setState({
       modal: !this.state.modal
     });
   };
+
   AcceptConfirmed = () => {
     this.setState({ ShowLoader: "block" });
     PostData("Accepts", this.state)
@@ -53,15 +74,14 @@ export class ActiveRequests extends Component {
           <MDBCard className="mt-2">
             <MDBCardBody className="pb-0">
               <h5>
-                {single.Name} need your help at {single.Location}
+                {single.Name} needs your help at {single.Location}
               </h5>
-              Please click the button to proceed
               <MDBBtn
                 disabled={single.Accepted}
                 name={single.ID}
                 onClick={this.AcceptClick}
               >
-                Accept
+                More
               </MDBBtn>
             </MDBCardBody>
           </MDBCard>
@@ -77,14 +97,20 @@ export class ActiveRequests extends Component {
         >
           <MDBModalHeader toggle={this.toggle}>Accept request</MDBModalHeader>
           <MDBModalBody>
-            Are you sure you want to accept the request?
+            <p>{this.state.RequestDetail}</p>
+            {this.state.Message.length > 0
+              ? 'and saying "' + this.state.Message + '"'
+              : ""}
+            <br></br>
+            <br></br>
+            <p>Are you willing to donate?</p>
           </MDBModalBody>
           <MDBModalFooter>
             <MDBBtn color="secondary" onClick={this.toggleAcceptConfirmModel}>
               No
             </MDBBtn>
             <MDBBtn color="primary" onClick={this.AcceptConfirmed}>
-              Yes, Sure
+              Yes, I'm
             </MDBBtn>
           </MDBModalFooter>
         </MDBModal>

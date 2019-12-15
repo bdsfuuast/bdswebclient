@@ -46,6 +46,9 @@ export class Updates1 extends Component {
     });
   };
 
+  ShowDetails = id => {
+    console.log(id);
+  };
   toggleDonationConfirmModel = () => {
     this.setState({
       modal: !this.state.modal
@@ -53,7 +56,6 @@ export class Updates1 extends Component {
   };
   ConfirmClick = e => {
     let id = e.target.name;
-    console.log(id);
     this.setState({ NotificationID: id, modal: !this.state.modal });
   };
   DonationConfirmed = () => {
@@ -79,7 +81,10 @@ export class Updates1 extends Component {
     }
     let Notifications = this.props.Notifications.map(single => {
       return (
-        <a key={this.props.Notifications.indexOf(single)} href="#">
+        <a
+          key={this.props.Notifications.indexOf(single)}
+          onClick={() => this.ShowDetails(single.ID)}
+        >
           <MDBAlert
             key={single.ID}
             color={this.state.notificationType[single.Activity]}
