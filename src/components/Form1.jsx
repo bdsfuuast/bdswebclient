@@ -88,7 +88,7 @@ export class Form1 extends Component {
       <React.Fragment>
         <form onSubmit={this.handleSubmit}>
           <p className="h4 text-center py-2">
-            Let other know you need their help!
+            Let others know you need their help!
           </p>
           <label
             htmlFor="defaultFormCardNameEx"
