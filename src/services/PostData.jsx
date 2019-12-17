@@ -1,4 +1,4 @@
-import { ApiUrl } from "../variable";
+import { ApiUrl } from "../Constants";
 
 export function PostData(path, data) {
   // const url = "http://agpstore.000webhostapp.com/postform.php";
