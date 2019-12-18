@@ -1,4 +1,4 @@
-import { TokenUrl } from "../variable";
+import { TokenUrl } from "./Constants";
 
 export function LoginService(data) {
   // const url = "http://agpstore.000webhostapp.com/postform.php";text/plain;charset=UTF-8

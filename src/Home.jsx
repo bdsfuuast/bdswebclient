@@ -9,7 +9,7 @@ import {
   ToastsContainerPosition
 } from "react-toasts";
 import { FetchData } from "./services/FetchData";
-import { ApiUrl, PusherKey } from "./variable";
+import { ApiUrl, PusherKey } from "./services/Constants";
 
 export class Home extends Component {
   constructor(props) {
