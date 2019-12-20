@@ -1,5 +1,5 @@
 import { ApiUrl } from "./Constants";
-export function FetchData(path, delay = 3000, errorDelay = 2000) {
+export function FetchData(path, delay = 300, errorDelay = 200) {
   // const url = "http://agpstore.000webhostapp.com/postform.php";
   const url = ApiUrl + path;
   // let AuthData = sessionStorage.getItem("access_token");

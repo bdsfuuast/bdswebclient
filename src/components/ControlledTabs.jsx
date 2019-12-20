@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Tabs, Tab } from "react-bootstrap";
-import { MDBCard, MDBCardBody } from "mdbreact";
+import { MDBCard, MDBCardBody, MDBRow, MDBCol } from "mdbreact";
 
 import { TabLayout } from "./TabLayout";
 
@@ -97,7 +97,7 @@ export class ControlledTabs extends Component {
   };
   render() {
     return (
-      <div className="mt-2 mr-4 ml-4">
+      <div className="mt-2 mr-4 ml-4" style={{ minWidth: "740px" }}>
         <MDBCard>
           <MDBCardBody>
             <Tabs
@@ -137,12 +137,15 @@ export class ControlledTabs extends Component {
               </Tab>
               <Tab eventKey="profile" title="Profile">
                 <TabLayout width="50">
-                  <Profile1 Profile={this.state.Profile} />
+                  <Profile1
+                    Profile={this.state.Profile}
+                    ProfilePhoto={this.props.ProfilePhoto}
+                  />
                 </TabLayout>
               </Tab>
               <Tab eventKey="settings" title="Settings">
                 <TabLayout>
-                  <Settings1 />
+                  <Settings1 Refresh={this.props.Refresh} />
                 </TabLayout>
               </Tab>
             </Tabs>

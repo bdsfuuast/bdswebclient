@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "../customSwitch.css";
-import { MDBBtn, MDBIcon, MDBInput } from "mdbreact";
+import { MDBBtn, MDBIcon, MDBInput, MDBFileupload } from "mdbreact";
 import { PostData } from "../services/PostData";
 import { ToastsStore } from "react-toasts";
 import { FetchData } from "../services/FetchData";
@@ -12,7 +12,8 @@ export class Settings1 extends Component {
     NewPassword: "",
     RepeatPassword: "",
     switch1: true,
-    ShowLoader: "none"
+    ShowLoader: "none",
+    PhotoData: ""
   };
 
   handleInputChange = event => {
@@ -24,7 +25,25 @@ export class Settings1 extends Component {
       [name]: value
     });
   };
+  UploadPhoto = e => {
+    e.preventDefault();
+    if (!this.state.PhotoData.startsWith("data:image/")) {
+      ToastsStore.error("Please select a valid image file.");
+      return;
+    }
 
+    PostData("UploadPhoto", { PhotoData: this.state.PhotoData })
+      .then(result => {
+        this.setState({ ShowLoader: "none" });
+        sessionStorage.setItem("ProfilePhoto", this.state.PhotoData);
+        this.props.Refresh();
+        ToastsStore.info("Photo updated successfully.");
+      })
+      .catch(errorMessage => {
+        this.setState({ ShowLoader: "none" });
+        ToastsStore.error(errorMessage);
+      });
+  };
   handleSubmit = e => {
     e.preventDefault();
     if (this.state.NewPassword !== this.state.RepeatPassword) {
@@ -104,10 +123,6 @@ export class Settings1 extends Component {
             required
             maxLength="100"
           />
-          <br></br>
-          <hr></hr>
-          <br></br>
-          <h4>Update email</h4>
           <MDBInput
             label="Email"
             name="Email"
@@ -119,6 +134,14 @@ export class Settings1 extends Component {
             required
             maxLength="100"
           />
+          <br></br>
+          <hr></hr>
+          <br></br>
+          <h4>Profile Photo</h4>
+          {this.FileUplod()}
+          <MDBBtn className="btn btn-outline-purple" onClick={this.UploadPhoto}>
+            Upload <i className="fas fa-upload"></i>
+          </MDBBtn>
           <div className="text-center py-4 mt-3">
             <MDBBtn className="btn btn-outline-purple" type="submit">
               Save Changes
@@ -130,6 +153,49 @@ export class Settings1 extends Component {
       </React.Fragment>
     );
   }
+  FileUplod = () => {
+    return (
+      <div className="input-group">
+        <div className="input-group-prepend">
+          <span className="input-group-text" id="inputGroupFileAddon01">
+            Upload
+          </span>
+        </div>
+        <div className="custom-file">
+          <input
+            onChange={this.onChangeFile}
+            type="file"
+            aria-describedby="inputGroupFileAddon01"
+            id="inputGroupFile01"
+            accept="image/*"
+          />
+          <label className="custom-file-label" htmlFor="inputGroupFile01">
+            Choose file
+          </label>
+        </div>
+      </div>
+    );
+  };
+
+  onChangeFile = e => {
+    var reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onload = () => {
+      if (!reader.result.startsWith("data:image/")) {
+        ToastsStore.error("Please select a valid image file.");
+        return;
+      }
+      if (reader.result.length > 2097150) {
+        ToastsStore.error("File Size is too large.");
+        return;
+      }
+      console.log(reader.result.length);
+      this.setState({ PhotoData: reader.result });
+    };
+    reader.onerror = error => {
+      console.log("Error: ", error);
+    };
+  };
 }
 
 // handleSwitchChange = nr => () => {

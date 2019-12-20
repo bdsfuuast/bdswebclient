@@ -30,7 +30,7 @@ class NavbarPage extends Component {
   render() {
     if (this.state.Logout) return <Redirect to="/" />;
     return (
-      <MDBNavbar color="red" dark expand="md">
+      <MDBNavbar color="red" dark expand="md" style={{ minWidth: "690px" }}>
         <MDBNavbarBrand>
           <strong className="white-text">Blood Donation Society</strong>
         </MDBNavbarBrand>
@@ -41,9 +41,9 @@ class NavbarPage extends Component {
               <MDBDropdown>
                 <MDBDropdownToggle className="dopdown-toggle" nav>
                   <img
-                    src="https://mdbootstrap.com/img/Photos/Avatars/avatar-2.jpg"
+                    src={this.props.ProfilePhoto}
                     className="rounded-circle z-depth-0"
-                    style={{ height: "35px", padding: 0 }}
+                    style={{ height: "35px", width: "35px", padding: 0 }}
                     alt=""
                   />
                 </MDBDropdownToggle>

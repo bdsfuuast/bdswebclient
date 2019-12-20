@@ -19,9 +19,15 @@ export class Home extends Component {
       title: "Message",
       message: "",
       showNotification: false,
-      logedIn: false
+      logedIn: false,
+      RefreshState: false,
+      ProfilePhoto: ""
     };
   }
+  Refresh = () => {
+    this.setState({ RefreshState: !this.state.RefreshState });
+    this.setState({ ProfilePhoto: sessionStorage.getItem("ProfilePhoto") });
+  };
   componentDidMount() {
     var pusher = new Pusher(PusherKey, {
       authEndpoint: ApiUrl + "AuthPusher",
@@ -54,6 +60,11 @@ export class Home extends Component {
         this.setState({ logedIn: result });
       })
       .catch(errorMessage => {});
+    FetchData("DownloadProfilePhoto", 500)
+      .then(result => {
+        this.setState({ ProfilePhoto: result.PhotoData });
+      })
+      .catch(errorMessage => {});
   }
   render() {
     if (!this.state.logedIn) {
@@ -62,8 +73,14 @@ export class Home extends Component {
     return (
       <React.Fragment>
         <MDBContainer>
-          <NavbarPage NavigateToProfile={this.NavigateToProfile} />
-          <ControlledTabs />
+          <NavbarPage
+            NavigateToProfile={this.NavigateToProfile}
+            ProfilePhoto={this.state.ProfilePhoto}
+          />
+          <ControlledTabs
+            Refresh={this.Refresh}
+            ProfilePhoto={this.state.ProfilePhoto}
+          />
         </MDBContainer>
 
         <ToastsContainer

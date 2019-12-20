@@ -46,7 +46,10 @@ export class Login extends Component {
     return (
       <React.Fragment>
         <MDBContainer>
-          <div className="w-responsive mx-auto p-3 mt-2 w-50">
+          <div
+            className="w-responsive mx-auto p-3 mt-2 w-50"
+            style={{ minWidth: "430px" }}
+          >
             <MDBCard>
               <MDBCardBody>
                 <form onSubmit={this.handleSubmit}>
