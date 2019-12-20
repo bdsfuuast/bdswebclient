@@ -1,5 +1,5 @@
 import { ApiUrl } from "./Constants";
-export function FetchData(path) {
+export function FetchData(path, delay = 3000, errorDelay = 2000) {
   // const url = "http://agpstore.000webhostapp.com/postform.php";
   const url = ApiUrl + path;
   // let AuthData = sessionStorage.getItem("access_token");
@@ -24,11 +24,15 @@ export function FetchData(path) {
       })
       .then(function(data) {
         if (data.error) throw new Error(data.error_description);
-        resolve(data);
+        setTimeout(function() {
+          resolve(data);
+        }, delay);
       })
       .catch(error => {
         console.log(error);
-        reject(error.message);
+        setTimeout(function() {
+          reject(error.message);
+        }, errorDelay);
       });
   });
 }

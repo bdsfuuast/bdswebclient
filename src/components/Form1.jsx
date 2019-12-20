@@ -23,7 +23,7 @@ export class Form1 extends Component {
     this.state = {
       Location: "PIMS, Islamabad",
       Description: "short description...",
-      BloodGroup: "0",
+      BloodGroup: "5",
       Count: "5",
       ShowLoader: "none",
       RequestsModal: false,
@@ -102,7 +102,6 @@ export class Form1 extends Component {
             name="BloodGroup"
             onChange={this.handleInputChange}
           >
-            <option>Blood Group</option>
             <option value="1">A+</option>
             <option value="2">A-</option>
             <option value="3">B+</option>
@@ -119,6 +118,8 @@ export class Form1 extends Component {
             value={this.state.Location}
             onChange={this.handleInputChange}
             labelClass={"customStyles"}
+            required
+            maxLength="100"
           />
           <MDBInput
             labelClass={"customStyles"}
@@ -127,6 +128,7 @@ export class Form1 extends Component {
             onChange={this.handleInputChange}
             type="textarea"
             label="Enter Short Description"
+            maxLength="1000"
           />
           <div className="text-center">
             <MDBBtn className="btn btn-outline-purple" type="submit">

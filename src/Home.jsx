@@ -49,7 +49,7 @@ export class Home extends Component {
           console.log(errorMessage);
         });
     });
-    FetchData("ping")
+    FetchData("ping", 500)
       .then(result => {
         this.setState({ logedIn: result });
       })
@@ -62,7 +62,7 @@ export class Home extends Component {
     return (
       <React.Fragment>
         <MDBContainer>
-          <NavbarPage />
+          <NavbarPage NavigateToProfile={this.NavigateToProfile} />
           <ControlledTabs />
         </MDBContainer>
 

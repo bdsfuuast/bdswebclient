@@ -147,7 +147,8 @@ export class Updates1 extends Component {
                     validate
                     error="wrong"
                     success="right"
-                    placeholder=""
+                    required
+                    maxLength="100"
                   ></MDBInput>
                 </div>
               </form>

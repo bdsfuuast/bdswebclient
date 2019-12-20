@@ -4,13 +4,15 @@ import { MDBBtn, MDBIcon, MDBInput } from "mdbreact";
 import { PostData } from "../services/PostData";
 import { ToastsStore } from "react-toasts";
 import { FetchData } from "../services/FetchData";
+import Loader from "../Loader";
 
 export class Settings1 extends Component {
   state = {
     OldPassword: "",
     NewPassword: "",
     RepeatPassword: "",
-    switch1: true
+    switch1: true,
+    ShowLoader: "none"
   };
 
   handleInputChange = event => {
@@ -25,18 +27,28 @@ export class Settings1 extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
+    if (this.state.NewPassword !== this.state.RepeatPassword) {
+      ToastsStore.error("Password and Confirm password must match!");
+      return;
+    }
+    this.setState({ ShowLoader: "block" });
     PostData("ProfileUpdate", this.state)
       .then(result => {
+        this.setState({ ShowLoader: "none" });
         this.setState(result);
+        ToastsStore.info("Profile updated successfully.");
       })
       .catch(errorMessage => {
+        this.setState({ ShowLoader: "none" });
         ToastsStore.error(errorMessage);
       });
   };
   componentDidMount() {
+    this.setState({ ShowLoader: "block" });
     FetchData("ProfileUpdate")
       .then(result => {
         this.setState(result);
+        this.setState({ ShowLoader: "none" });
       })
       .catch(errorMessage => {});
   }
@@ -53,6 +65,8 @@ export class Settings1 extends Component {
             value={this.state.OldPassword}
             onChange={this.handleInputChange}
             labelClass={"customStyles"}
+            maxLength="100"
+            minLength="6"
           />
           <MDBInput
             label="New Password"
@@ -62,6 +76,8 @@ export class Settings1 extends Component {
             value={this.state.NewPassword}
             onChange={this.handleInputChange}
             labelClass={"customStyles"}
+            maxLength="100"
+            minLength="6"
           />
           <MDBInput
             label="Repeat Password"
@@ -71,6 +87,8 @@ export class Settings1 extends Component {
             value={this.state.RepeatPassword}
             onChange={this.handleInputChange}
             labelClass={"customStyles"}
+            maxLength="100"
+            minLength="6"
           />
           <br></br>
           <hr></hr>
@@ -83,6 +101,8 @@ export class Settings1 extends Component {
             value={this.state.Contact}
             onChange={this.handleInputChange}
             labelClass={"customStyles"}
+            required
+            maxLength="100"
           />
           <br></br>
           <hr></hr>
@@ -95,6 +115,9 @@ export class Settings1 extends Component {
             value={this.state.Email}
             onChange={this.handleInputChange}
             labelClass={"customStyles"}
+            type="email"
+            required
+            maxLength="100"
           />
           <div className="text-center py-4 mt-3">
             <MDBBtn className="btn btn-outline-purple" type="submit">
@@ -103,6 +126,7 @@ export class Settings1 extends Component {
             </MDBBtn>
           </div>
         </form>
+        <Loader ShowLoader={this.state.ShowLoader}></Loader>
       </React.Fragment>
     );
   }

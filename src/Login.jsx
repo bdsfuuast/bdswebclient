@@ -63,6 +63,7 @@ export class Login extends Component {
                       success="right"
                       value={this.state.username}
                       onChange={this.handleInputChange}
+                      required
                     />
                     <MDBInput
                       label="Type your password"
@@ -73,6 +74,8 @@ export class Login extends Component {
                       validate
                       value={this.state.password}
                       onChange={this.handleInputChange}
+                      required
+                      //minLength="6"
                     />
                     <div className="container" align="right">
                       <a>Forgot Password</a>
