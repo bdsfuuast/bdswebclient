@@ -15,6 +15,7 @@ import {
 
 import { HistoryItemDetail } from "./HistoryItemDetail";
 import timeDifference from "../services/TimeService";
+import Loader from "../Loader";
 
 export class History1 extends Component {
   constructor(props, context) {
@@ -52,7 +53,7 @@ export class History1 extends Component {
 
   render() {
     if (!this.props.History) {
-      return <div>Sorry! No data be shown.</div>;
+      return <React.Fragment />;
     }
     let filteredData = this.props.History.filter(element => {
       if (this.state.filterText === "all") return element;
@@ -138,6 +139,7 @@ export class History1 extends Component {
             </MDBModalFooter>
           </MDBModal>
         </MDBContainer>
+        {/* <Loader ShowLoader={this.state.ShowLoader}></Loader> */}
       </React.Fragment>
     );
   }

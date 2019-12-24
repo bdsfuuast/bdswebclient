@@ -5,7 +5,7 @@ class Loader extends Component {
   render() {
     return (
       <div id="loading" className={"d-" + this.props.ShowLoader}>
-        <img id="loading-image" src="./loader.gif" alt="Loading..." />
+        <img id="loading-image" src="./spinner.gif" alt="Loading..." />
       </div>
     );
   }

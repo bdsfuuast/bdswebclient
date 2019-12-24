@@ -41,13 +41,16 @@ export class Form1 extends Component {
   };
 
   OpenRequestsModel = () => {
+    this.setState({ ShowLoader: "block" });
     FetchData("requests")
       .then(result => {
         this.setState({ Requests: result });
         this.toggleRequestsModal();
+        this.setState({ ShowLoader: "none" });
       })
       .catch(errorMessage => {
         console.log(errorMessage);
+        this.setState({ ShowLoader: "none" });
       });
   };
   toggleRequestsModal = () => {

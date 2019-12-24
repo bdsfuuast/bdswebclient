@@ -32,12 +32,13 @@ export class Settings1 extends Component {
       return;
     }
 
-    PostData("UploadPhoto", { PhotoData: this.state.PhotoData })
+    this.setState({ ShowLoader: "block" });
+    PostData("UploadPhoto", { PhotoData: this.state.PhotoData }, 3000)
       .then(result => {
-        this.setState({ ShowLoader: "none" });
         sessionStorage.setItem("ProfilePhoto", this.state.PhotoData);
         this.props.Refresh();
         ToastsStore.info("Photo updated successfully.");
+        this.setState({ ShowLoader: "none", PhotoData: "" });
       })
       .catch(errorMessage => {
         this.setState({ ShowLoader: "none" });
@@ -72,6 +73,8 @@ export class Settings1 extends Component {
       .catch(errorMessage => {});
   }
   render() {
+    const CanUpload =
+      this.state.PhotoData && this.state.PhotoData.startsWith("data:image/");
     return (
       <React.Fragment>
         <form onSubmit={this.handleSubmit}>
@@ -139,7 +142,12 @@ export class Settings1 extends Component {
           <br></br>
           <h4>Profile Photo</h4>
           {this.FileUplod()}
-          <MDBBtn className="btn btn-outline-purple" onClick={this.UploadPhoto}>
+
+          <MDBBtn
+            className="btn btn-outline-purple"
+            onClick={this.UploadPhoto}
+            disabled={!CanUpload}
+          >
             Upload <i className="fas fa-upload"></i>
           </MDBBtn>
           <div className="text-center py-4 mt-3">

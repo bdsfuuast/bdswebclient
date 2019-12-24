@@ -10,6 +10,7 @@ import {
 } from "react-toasts";
 import { FetchData } from "./services/FetchData";
 import { ApiUrl, PusherKey } from "./services/Constants";
+import Loader from "./Loader";
 
 export class Home extends Component {
   constructor(props) {
@@ -68,7 +69,7 @@ export class Home extends Component {
   }
   render() {
     if (!this.state.logedIn) {
-      return <React.Fragment />;
+      return <Loader ShowLoader={this.state.ShowLoader}></Loader>;
     }
     return (
       <React.Fragment>

@@ -85,8 +85,8 @@ a:hover {
 
 #loading-image {
   position: relative;
-  top: 155px;
-  width: 200px;
+  top: 35%;
+  width: 70px;
   z-index: 100;
 }
 

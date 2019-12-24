@@ -51,23 +51,29 @@ export class ControlledTabs extends Component {
     this.setState({ key });
     switch (key) {
       case "updates": {
+        this.setState({ ShowLoader: "block" });
         FetchData("notifications")
           .then(result => {
             this.setState({ Notifications: result });
             this.NotificationsSeen();
+            this.setState({ ShowLoader: "none" });
           })
           .catch(errorMessage => {
             console.log(errorMessage);
+            this.setState({ ShowLoader: "none" });
           });
         break;
       }
       case "history": {
+        this.setState({ ShowLoader: "block" });
         FetchData("history")
           .then(result => {
             this.setState({ History: result });
+            this.setState({ ShowLoader: "none" });
           })
           .catch(errorMessage => {
             console.log(errorMessage);
+            this.setState({ ShowLoader: "none" });
           });
         break;
       }
@@ -82,12 +88,15 @@ export class ControlledTabs extends Component {
       //   break;
       //}
       case "profile": {
+        this.setState({ ShowLoader: "block" });
         FetchData("profile")
           .then(result => {
             this.setState({ Profile: result });
+            this.setState({ ShowLoader: "none" });
           })
           .catch(errorMessage => {
             console.log(errorMessage);
+            this.setState({ ShowLoader: "none" });
           });
         break;
       }

@@ -28,7 +28,9 @@ export function LoginService(data) {
         //access_token , expires_in , token_type
       })
       .catch(error => {
-        reject(error.message);
+        setTimeout(function() {
+          reject(error.message);
+        }, 1500);
       });
   });
 }

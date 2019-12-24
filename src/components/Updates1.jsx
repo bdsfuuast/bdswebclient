@@ -77,7 +77,7 @@ export class Updates1 extends Component {
   };
   render() {
     if (!this.props.Notifications) {
-      return <div>No notificatins to be shown...!</div>;
+      return <React.Fragment />;
     }
     let Notifications = this.props.Notifications.map(single => {
       return (
