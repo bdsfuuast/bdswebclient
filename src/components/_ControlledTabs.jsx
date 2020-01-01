@@ -2,14 +2,15 @@ import React, { Component } from "react";
 import { Tabs, Tab } from "react-bootstrap";
 import { MDBCard, MDBCardBody, MDBRow, MDBCol } from "mdbreact";
 
-import { TabLayout } from "./TabLayout";
+import { TabLayout } from "./_TabLayout";
 
-import { Form1 } from "./Form1";
-import { Updates1 } from "./Updates1";
-import { Profile1 } from "./Profile1";
-import { History1 } from "./History1";
-import { Settings1 } from "./Settings1";
+import { TabRequestForm } from "./TabRequestForm";
+import { TabNotifications } from "./TabNotifications";
+import { TabProfile } from "./TabProfile";
+import { TabHistory } from "./TabHistory";
+import { TabSettings } from "./TabSettings";
 
+import { ToastsStore } from "react-toasts";
 import { FetchData } from "../services/FetchData";
 import { PostData } from "../services/PostData";
 
@@ -41,11 +42,7 @@ export class ControlledTabs extends Component {
     });
   };
   NotificationsSeen() {
-    PostData("Notifications")
-      .then()
-      .catch(errorMessage => {
-        console.error(errorMessage);
-      });
+    PostData("Notifications");
   }
   onTabSelect = key => {
     this.setState({ key });
@@ -59,7 +56,7 @@ export class ControlledTabs extends Component {
             this.setState({ ShowLoader: "none" });
           })
           .catch(errorMessage => {
-            console.log(errorMessage);
+            ToastsStore.error(errorMessage);
             this.setState({ ShowLoader: "none" });
           });
         break;
@@ -72,7 +69,7 @@ export class ControlledTabs extends Component {
             this.setState({ ShowLoader: "none" });
           })
           .catch(errorMessage => {
-            console.log(errorMessage);
+            ToastsStore.error(errorMessage);
             this.setState({ ShowLoader: "none" });
           });
         break;
@@ -83,7 +80,7 @@ export class ControlledTabs extends Component {
       //       this.setState({ Requests: result });
       //     })
       //     .catch(errorMessage => {
-      //       console.log(errorMessage);
+      //       ToastsStore.error(errorMessage);
       //     });
       //   break;
       //}
@@ -95,7 +92,7 @@ export class ControlledTabs extends Component {
             this.setState({ ShowLoader: "none" });
           })
           .catch(errorMessage => {
-            console.log(errorMessage);
+            ToastsStore.error(errorMessage);
             this.setState({ ShowLoader: "none" });
           });
         break;
@@ -118,14 +115,14 @@ export class ControlledTabs extends Component {
                 <TabLayout>
                   <MDBCard>
                     <MDBCardBody>
-                      <Form1 />
+                      <TabRequestForm />
                     </MDBCardBody>
                   </MDBCard>
                 </TabLayout>
               </Tab>
               <Tab eventKey="updates" title="Notifications">
                 <TabLayout>
-                  <Updates1
+                  <TabNotifications
                     Notifications={this.state.Notifications}
                     OnDonationConfirmed={this.DonationConfirmed}
                   />
@@ -141,12 +138,12 @@ export class ControlledTabs extends Component {
               </Tab> */}
               <Tab eventKey="history" title="History">
                 <TabLayout>
-                  <History1 History={this.state.History} />
+                  <TabHistory History={this.state.History} />
                 </TabLayout>
               </Tab>
               <Tab eventKey="profile" title="Profile">
                 <TabLayout width="50">
-                  <Profile1
+                  <TabProfile
                     Profile={this.state.Profile}
                     ProfilePhoto={this.props.ProfilePhoto}
                   />
@@ -154,7 +151,7 @@ export class ControlledTabs extends Component {
               </Tab>
               <Tab eventKey="settings" title="Settings">
                 <TabLayout>
-                  <Settings1 Refresh={this.props.Refresh} />
+                  <TabSettings Refresh={this.props.Refresh} />
                 </TabLayout>
               </Tab>
             </Tabs>

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { MDBInput, MDBBtn, MDBCard, MDBCardBody, MDBContainer } from "mdbreact";
 import { LoginService } from "./services/LoginService";
+import { PostData } from "./services/PostData";
 import { Redirect } from "react-router-dom";
 import { ToastsContainer, ToastsStore } from "react-toasts";
 import Loader from "./Loader";
@@ -24,6 +25,29 @@ export class Login extends Component {
     this.setState({
       [name]: value
     });
+  };
+  validateEmail = email => {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+  };
+  RequestPassword = () => {
+    if (!this.validateEmail(this.state.username)) {
+      alert("please enter a valid email address");
+      return;
+    }
+    this.setState({ ShowLoader: "block" });
+    PostData("RequestPassword", {
+      username: this.state.username,
+      password: "000000"
+    })
+      .then(data => {
+        this.setState({ ShowLoader: "none" });
+        alert(data.message);
+      })
+      .catch(errorMessage => {
+        this.setState({ ShowLoader: "none" });
+        alert(errorMessage);
+      });
   };
   handleSubmit = e => {
     this.setState({ ShowLoader: "block" });
@@ -78,17 +102,19 @@ export class Login extends Component {
                       value={this.state.password}
                       onChange={this.handleInputChange}
                       required
-                      //minLength="6"
+                      minLength="6"
                     />
                     <div className="container" align="right">
-                      <a>Forgot Password</a>
+                      <a href="#" onClick={this.RequestPassword}>
+                        Request Password
+                      </a>
                     </div>
                   </div>
                   <div className="text-center">
                     <MDBBtn type="submit">Login</MDBBtn>
                   </div>
                 </form>
-                Register a new <a href="#">Account</a>
+                {/* Register a new <a href="#">Account</a> */}
               </MDBCardBody>
             </MDBCard>
           </div>

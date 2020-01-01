@@ -17,7 +17,7 @@ import {
   MDBInput
 } from "mdbreact";
 
-export class Profile1 extends Component {
+export class TabProfile extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = {

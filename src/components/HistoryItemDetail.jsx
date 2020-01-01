@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { MDBListGroup, MDBListGroupItem } from "mdbreact";
 
+import { ToastsStore } from "react-toasts";
 import { FetchData } from "../services/FetchData";
 
 export class HistoryItemDetail extends Component {
@@ -14,7 +15,7 @@ export class HistoryItemDetail extends Component {
         this.setState({ Details: result });
       })
       .catch(errorMessage => {
-        console.log(errorMessage);
+        ToastsStore.error(errorMessage);
       });
   }
   render() {

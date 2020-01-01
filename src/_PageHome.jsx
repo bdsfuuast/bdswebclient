@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { MDBContainer } from "mdbreact";
-import NavbarPage from "./components/NavbarPage";
-import { ControlledTabs } from "./components/ControlledTabs";
+import AppNavbar from "./components/_AppNavbar";
+import { ControlledTabs } from "./components/_ControlledTabs";
 import Pusher from "pusher-js";
 import {
   ToastsContainer,
@@ -43,29 +43,25 @@ export class Home extends Component {
     var channel = pusher.subscribe("private-notify");
     channel.bind("my-event", data => {
       //this.setState({ message: data.message, showNotification: true });
-      FetchData("CheckNotifications")
-        .then(result => {
-          if (result.message > sessionStorage.getItem("nc")) {
-            ToastsStore.info(
-              "You have " + result.message + " new notification(s)"
-            );
-          }
-          sessionStorage.setItem("nc", result.message);
-        })
-        .catch(errorMessage => {
-          console.log(errorMessage);
-        });
+      FetchData("CheckNotifications").then(result => {
+        if (result.message > sessionStorage.getItem("nc")) {
+          ToastsStore.info(
+            "You have " + result.message + " new notification(s)"
+          );
+        }
+        sessionStorage.setItem("nc", result.message);
+      });
     });
     FetchData("ping", 500)
       .then(result => {
         this.setState({ logedIn: result });
       })
-      .catch(errorMessage => {});
-    FetchData("DownloadProfilePhoto", 500)
-      .then(result => {
-        this.setState({ ProfilePhoto: result.PhotoData });
-      })
-      .catch(errorMessage => {});
+      .catch(errorMessage => {
+        window.location.href = "/";
+      });
+    FetchData("DownloadProfilePhoto", 500).then(result => {
+      this.setState({ ProfilePhoto: result.PhotoData });
+    });
   }
   render() {
     if (!this.state.logedIn) {
@@ -74,7 +70,7 @@ export class Home extends Component {
     return (
       <React.Fragment>
         <MDBContainer>
-          <NavbarPage
+          <AppNavbar
             NavigateToProfile={this.NavigateToProfile}
             ProfilePhoto={this.state.ProfilePhoto}
           />

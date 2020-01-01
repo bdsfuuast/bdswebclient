@@ -12,7 +12,8 @@ import {
   MDBDropdownItem
 } from "mdbreact";
 import { Redirect } from "react-router-dom";
-class NavbarPage extends Component {
+
+export default class AppNavbar extends Component {
   state = {
     collapseID: "",
     Logout: false
@@ -60,5 +61,3 @@ class NavbarPage extends Component {
     );
   }
 }
-
-export default NavbarPage;

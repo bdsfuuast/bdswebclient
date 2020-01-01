@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import React, { Component } from "react";
-import { Home } from "./Home";
-import { Login } from "./Login";
+import { Home } from "./_PageHome";
+import { Login } from "./_PageLogin";
 import { NotFound } from "./NotFound";
 
 export class AppRouter extends Component {

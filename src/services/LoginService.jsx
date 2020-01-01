@@ -1,8 +1,8 @@
 import { TokenUrl } from "./Constants";
 
-export function LoginService(data) {
+export function LoginService(data, url = TokenUrl) {
   // const url = "http://agpstore.000webhostapp.com/postform.php";text/plain;charset=UTF-8
-  const url = TokenUrl;
+  //const url = TokenUrl;
   // const bodydata =
   //   "username=" +
   //   data.username +
@@ -29,6 +29,13 @@ export function LoginService(data) {
       })
       .catch(error => {
         setTimeout(function() {
+          if (
+            error.message &&
+            error.message.toLowerCase().indexOf("failed to fetch") > -1
+          ) {
+            reject("no internet connection");
+            return;
+          }
           reject(error.message);
         }, 1500);
       });

@@ -6,14 +6,16 @@ import { ToastsStore } from "react-toasts";
 import { FetchData } from "../services/FetchData";
 import Loader from "../Loader";
 
-export class Settings1 extends Component {
+export class TabSettings extends Component {
   state = {
     OldPassword: "",
     NewPassword: "",
     RepeatPassword: "",
-    switch1: true,
     ShowLoader: "none",
-    PhotoData: ""
+    PhotoData: "",
+    Email: "",
+    Contact: "",
+    OrignalData: ""
   };
 
   handleInputChange = event => {
@@ -68,11 +70,19 @@ export class Settings1 extends Component {
     FetchData("ProfileUpdate")
       .then(result => {
         this.setState(result);
+        this.setState({ OrignalData: result.Contact + result.Email });
         this.setState({ ShowLoader: "none" });
       })
-      .catch(errorMessage => {});
+      .catch(errorMessage => {
+        this.setState({ ShowLoader: "none" });
+        ToastsStore.error(errorMessage);
+      });
   }
   render() {
+    const CanUpdate =
+      !(this.state.OrignalData == this.state.Contact + this.state.Email) ||
+      this.state.OldPassword.length >= 6;
+
     const CanUpload =
       this.state.PhotoData && this.state.PhotoData.startsWith("data:image/");
     return (
@@ -151,7 +161,11 @@ export class Settings1 extends Component {
             Upload <i className="fas fa-upload"></i>
           </MDBBtn>
           <div className="text-center py-4 mt-3">
-            <MDBBtn className="btn btn-outline-purple" type="submit">
+            <MDBBtn
+              className="btn btn-outline-purple"
+              type="submit"
+              disabled={!CanUpdate}
+            >
               Save Changes
               <MDBIcon far icon="paper-plane" className="ml-2" />
             </MDBBtn>
@@ -184,8 +198,10 @@ export class Settings1 extends Component {
       </div>
     );
   };
-
   onChangeFile = e => {
+    if (!e.target.files[0]) {
+      return;
+    }
     var reader = new FileReader();
     reader.readAsDataURL(e.target.files[0]);
     reader.onload = () => {
@@ -193,16 +209,42 @@ export class Settings1 extends Component {
         ToastsStore.error("Please select a valid image file.");
         return;
       }
-      if (reader.result.length > 2097150) {
-        ToastsStore.error("File Size is too large.");
-        return;
-      }
-      console.log(reader.result.length);
-      this.setState({ PhotoData: reader.result });
+      this.reduceImgSize(reader.result, reducedImg => {
+        if (reducedImg.length > 2097150) {
+          ToastsStore.error("File Size is too large.");
+          return;
+        }
+        this.setState({ PhotoData: reducedImg });
+      });
     };
     reader.onerror = error => {
       console.log("Error: ", error);
     };
+  };
+
+  reduceImgSize = (imgData, callBack) => {
+    var img = new Image();
+    img.onload = function() {
+      var canvas = document.createElement("canvas");
+      var ctx = canvas.getContext("2d");
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      var width, height;
+      var maxWidth = 600;
+      var origWidth = img.width;
+      var origHeight = img.height;
+      var ratio = 0;
+      ratio = maxWidth / origWidth;
+      ratio = ratio < 1 ? ratio : 1;
+      height = origHeight * ratio;
+      width = origWidth * ratio;
+      canvas.width = width;
+      canvas.height = height;
+      ctx.drawImage(img, 0, 0, width, height);
+      var dataURI = canvas.toDataURL();
+
+      callBack(dataURI);
+    };
+    img.src = imgData;
   };
 }
 

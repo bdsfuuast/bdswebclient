@@ -97,12 +97,13 @@ export class ActiveRequests extends Component {
         >
           <MDBModalHeader toggle={this.toggle}>Accept request</MDBModalHeader>
           <MDBModalBody>
-            <p>{this.state.RequestDetail}</p>
-            {this.state.Message.length > 0
-              ? 'and saying "' + this.state.Message + '"'
-              : ""}
-            <br></br>
-            <br></br>
+            <p>
+              {this.state.RequestDetail}
+              {this.state.Message.length > 0
+                ? ' And saying "' + this.state.Message + '"'
+                : ""}
+            </p>
+
             <p>Are you willing to donate?</p>
           </MDBModalBody>
           <MDBModalFooter>

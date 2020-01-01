@@ -1,10 +1,6 @@
 import { ApiUrl } from "./Constants";
 export function FetchData(path, delay = 300, errorDelay = 200) {
-  // const url = "http://agpstore.000webhostapp.com/postform.php";
   const url = ApiUrl + path;
-  // let AuthData = sessionStorage.getItem("access_token");
-  // console.log(AuthData);
-  // return;
   let fetchData = {
     headers: {
       Authorization: sessionStorage.getItem("access_token")
@@ -29,8 +25,14 @@ export function FetchData(path, delay = 300, errorDelay = 200) {
         }, delay);
       })
       .catch(error => {
-        console.log(error);
         setTimeout(function() {
+          if (
+            error.message &&
+            error.message.toLowerCase().indexOf("failed to fetch") > -1
+          ) {
+            reject("no internet connection");
+            return;
+          }
           reject(error.message);
         }, errorDelay);
       });

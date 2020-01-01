@@ -16,13 +16,13 @@ import Loader from "../Loader";
 import { Container, Button } from "react-floating-action-button";
 import { ActiveRequests } from "./ActiveRequests";
 
-export class Form1 extends Component {
+export class TabRequestForm extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      Location: "PIMS, Islamabad",
-      Description: "short description...",
+      Location: "",
+      Description: "",
       BloodGroup: "5",
       Count: "5",
       ShowLoader: "none",
@@ -49,7 +49,7 @@ export class Form1 extends Component {
         this.setState({ ShowLoader: "none" });
       })
       .catch(errorMessage => {
-        console.log(errorMessage);
+        ToastsStore.error(errorMessage);
         this.setState({ ShowLoader: "none" });
       });
   };

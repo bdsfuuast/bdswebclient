@@ -17,7 +17,7 @@ import { HistoryItemDetail } from "./HistoryItemDetail";
 import timeDifference from "../services/TimeService";
 import Loader from "../Loader";
 
-export class History1 extends Component {
+export class TabHistory extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = {

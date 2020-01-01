@@ -31,8 +31,14 @@ export function PostData(path, data, delay = 300, errorDelay = 200) {
         }, delay);
       })
       .catch(error => {
-        console.log(error);
         setTimeout(function() {
+          if (
+            error.message &&
+            error.message.toLowerCase().indexOf("failed to fetch") > -1
+          ) {
+            reject("no internet connection");
+            return;
+          }
           reject(error.message);
         }, errorDelay);
       });

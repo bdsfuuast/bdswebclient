@@ -15,7 +15,7 @@ import timeDifference from "../services/TimeService";
 import Loader from "../Loader";
 //import { relative } from "path";
 
-export class Updates1 extends Component {
+export class TabNotifications extends Component {
   constructor(props) {
     super(props);
 
@@ -58,8 +58,9 @@ export class Updates1 extends Component {
     let id = e.target.name;
     this.setState({ NotificationID: id, modal: !this.state.modal });
   };
-  DonationConfirmed = () => {
+  DonationConfirmed = event => {
     this.setState({ ShowLoader: "block" });
+    event.preventDefault();
     PostData("Transfusions", {
       NotificationID: this.state.NotificationID,
       Location: this.state.Location
@@ -129,9 +130,9 @@ export class Updates1 extends Component {
           <MDBModalHeader toggle={this.toggle}>
             Are you sure you have received the blood?
           </MDBModalHeader>
-          <MDBModalBody>
-            <MDBContainer>
-              <form>
+          <form onSubmit={this.DonationConfirmed}>
+            <MDBModalBody>
+              <MDBContainer>
                 <div className="grey-text">
                   <small>
                     Where did you received the blood e.g. "AFIT, Rawalpindi"
@@ -151,17 +152,20 @@ export class Updates1 extends Component {
                     maxLength="100"
                   ></MDBInput>
                 </div>
-              </form>
-            </MDBContainer>
-          </MDBModalBody>
-          <MDBModalFooter>
-            <MDBBtn color="secondary" onClick={this.toggleDonationConfirmModel}>
-              Close
-            </MDBBtn>
-            <MDBBtn color="primary" onClick={this.DonationConfirmed}>
-              Yes, Confirm
-            </MDBBtn>
-          </MDBModalFooter>
+              </MDBContainer>
+            </MDBModalBody>
+            <MDBModalFooter>
+              <MDBBtn
+                color="secondary"
+                onClick={this.toggleDonationConfirmModel}
+              >
+                Close
+              </MDBBtn>
+              <MDBBtn type="submit" color="primary">
+                Yes, Confirm
+              </MDBBtn>
+            </MDBModalFooter>
+          </form>
         </MDBModal>
         <Loader ShowLoader={this.state.ShowLoader}></Loader>
       </React.Fragment>
