@@ -65,10 +65,10 @@ export class TabNotifications extends Component {
       NotificationID: this.state.NotificationID,
       Location: this.state.Location
     })
-      .then(data => {
+      .then(resp => {
         this.props.OnDonationConfirmed(this.state.NotificationID);
         this.setState({ ShowLoader: "none" });
-        ToastsStore.info(data.message);
+        ToastsStore.info(resp.Message);
       })
       .catch(errorMessage => {
         this.setState({ ShowLoader: "none" });

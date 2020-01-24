@@ -12,7 +12,7 @@ export class HistoryItemDetail extends Component {
   componentDidMount() {
     FetchData(this.props.url)
       .then(result => {
-        this.setState({ Details: result });
+        this.setState({ Details: result.Data });
       })
       .catch(errorMessage => {
         ToastsStore.error(errorMessage);

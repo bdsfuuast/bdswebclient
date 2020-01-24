@@ -29,7 +29,8 @@ export class ActiveRequests extends Component {
   AcceptClick = e => {
     let id = e.target.name;
     FetchData("Requests/d?id=" + id)
-      .then(data => {
+      .then(resp => {
+        var data = resp.Data;
         this.setState({
           RequestDetail: data.Detail,
           Message: data.Message,
@@ -51,10 +52,10 @@ export class ActiveRequests extends Component {
   AcceptConfirmed = () => {
     this.setState({ ShowLoader: "block" });
     PostData("Accepts", this.state)
-      .then(data => {
+      .then(resp => {
         this.props.OnRequestAccept(this.state.RequestID);
         this.setState({ ShowLoader: "none" });
-        ToastsStore.info(data.message);
+        ToastsStore.info(resp.Message);
       })
       .catch(errorMessage => {
         this.setState({ ShowLoader: "none" });

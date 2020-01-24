@@ -44,23 +44,22 @@ export class Home extends Component {
     channel.bind("my-event", data => {
       //this.setState({ message: data.message, showNotification: true });
       FetchData("CheckNotifications").then(result => {
-        if (result.message > sessionStorage.getItem("nc")) {
-          ToastsStore.info(
-            "You have " + result.message + " new notification(s)"
-          );
+        if (result.Data > sessionStorage.getItem("nc")) {
+          ToastsStore.info("You have " + result.Data + " new notification(s)");
         }
-        sessionStorage.setItem("nc", result.message);
+        sessionStorage.setItem("nc", result.Data);
       });
     });
     FetchData("ping", 500)
       .then(result => {
-        this.setState({ logedIn: result });
+        this.setState({ logedIn: result.Data });
       })
       .catch(errorMessage => {
-        window.location.href = "/";
+        console.log(errorMessage);
+        //window.location.href = "/";
       });
     FetchData("DownloadProfilePhoto", 500).then(result => {
-      this.setState({ ProfilePhoto: result.PhotoData });
+      this.setState({ ProfilePhoto: result.Data.PhotoData });
     });
   }
   render() {

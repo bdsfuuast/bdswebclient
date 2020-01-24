@@ -44,7 +44,7 @@ export class TabRequestForm extends Component {
     this.setState({ ShowLoader: "block" });
     FetchData("requests")
       .then(result => {
-        this.setState({ Requests: result });
+        this.setState({ Requests: result.Data });
         this.toggleRequestsModal();
         this.setState({ ShowLoader: "none" });
       })
@@ -76,9 +76,9 @@ export class TabRequestForm extends Component {
     this.setState({ ShowLoader: "block" });
     event.preventDefault();
     PostData("requests", this.state)
-      .then(data => {
+      .then(resp => {
         this.setState({ ShowLoader: "none" });
-        ToastsStore.info(data.message);
+        ToastsStore.info(resp.Message);
       })
       .catch(errorMessage => {
         this.setState({ ShowLoader: "none" });

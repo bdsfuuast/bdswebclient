@@ -51,7 +51,7 @@ export class ControlledTabs extends Component {
         this.setState({ ShowLoader: "block" });
         FetchData("notifications")
           .then(result => {
-            this.setState({ Notifications: result });
+            this.setState({ Notifications: result.Data });
             this.NotificationsSeen();
             this.setState({ ShowLoader: "none" });
           })
@@ -65,7 +65,7 @@ export class ControlledTabs extends Component {
         this.setState({ ShowLoader: "block" });
         FetchData("history")
           .then(result => {
-            this.setState({ History: result });
+            this.setState({ History: result.Data });
             this.setState({ ShowLoader: "none" });
           })
           .catch(errorMessage => {
@@ -88,7 +88,7 @@ export class ControlledTabs extends Component {
         this.setState({ ShowLoader: "block" });
         FetchData("profile")
           .then(result => {
-            this.setState({ Profile: result });
+            this.setState({ Profile: result.Data });
             this.setState({ ShowLoader: "none" });
           })
           .catch(errorMessage => {

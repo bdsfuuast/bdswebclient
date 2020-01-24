@@ -36,7 +36,7 @@ export class TabSettings extends Component {
 
     this.setState({ ShowLoader: "block" });
     PostData("UploadPhoto", { PhotoData: this.state.PhotoData }, 3000)
-      .then(result => {
+      .then(resp => {
         sessionStorage.setItem("ProfilePhoto", this.state.PhotoData);
         this.props.Refresh();
         ToastsStore.info("Photo updated successfully.");
@@ -55,10 +55,10 @@ export class TabSettings extends Component {
     }
     this.setState({ ShowLoader: "block" });
     PostData("ProfileUpdate", this.state)
-      .then(result => {
+      .then(resp => {
         this.setState({ ShowLoader: "none" });
-        this.setState(result);
-        ToastsStore.info("Profile updated successfully.");
+        this.setState(resp.Data);
+        ToastsStore.info(resp.Message);
       })
       .catch(errorMessage => {
         this.setState({ ShowLoader: "none" });
@@ -68,7 +68,8 @@ export class TabSettings extends Component {
   componentDidMount() {
     this.setState({ ShowLoader: "block" });
     FetchData("ProfileUpdate")
-      .then(result => {
+      .then(resp => {
+        var result = resp.Data;
         this.setState(result);
         this.setState({ OrignalData: result.Contact + result.Email });
         this.setState({ ShowLoader: "none" });
